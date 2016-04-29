@@ -1,6 +1,8 @@
 package com.alexandeh.nebula;
 
 import com.alexandeh.nebula.files.ConfigFile;
+import com.alexandeh.nebula.files.ConfigCache.MainConfigCache;
+import com.alexandeh.nebula.files.ConfigCache.LangConfigCache;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,14 +16,20 @@ public class Nebula extends JavaPlugin {
 
     private static Nebula instance;
 
-    private ConfigFile configFile;
+    private ConfigFile mainFile;
     private ConfigFile langFile;
+
+    private MainConfigCache mainConfigCache;
+    private LangConfigCache langConfigCache;
 
     public void onEnable() {
         instance = this;
 
-        configFile = new ConfigFile(this, "config");
+        mainFile = new ConfigFile(this, "config");
         langFile = new ConfigFile(this, "lang");
+
+        mainConfigCache = new MainConfigCache(mainFile);
+        langConfigCache = new LangConfigCache(langFile);
     }
 
     public static Nebula getInstance() {
