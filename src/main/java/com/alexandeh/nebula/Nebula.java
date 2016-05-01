@@ -1,13 +1,15 @@
 package com.alexandeh.nebula;
 
-import com.alexandeh.nebula.factions.commands.FactionCreateCommand;
-import com.alexandeh.nebula.factions.commands.FactionHelpCommand;
-import com.alexandeh.nebula.files.ConfigCache.LangConfigCache;
-import com.alexandeh.nebula.files.ConfigCache.MainConfigCache;
+import com.alexandeh.nebula.factions.commands.*;
 import com.alexandeh.nebula.files.ConfigFile;
+import com.alexandeh.nebula.profiles.ProfileListeners;
 import com.alexandeh.nebula.utils.command.CommandFramework;
+import com.alexandeh.nebula.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
 
 /*
  * Copyright (c) 2016, Alexander Maxwell. All rights reserved.
@@ -44,28 +46,41 @@ public class Nebula extends JavaPlugin {
     private static Nebula instance;
 
     private CommandFramework framework;
-    private MainConfigCache mainConfigCache;
-    private LangConfigCache langConfigCache;
+    private ConfigFile mainConfig;
+    private ConfigFile langConfig;
 
     public void onEnable() {
         instance = this;
 
-        mainConfigCache = new MainConfigCache(new ConfigFile(this, "config"));
-        langConfigCache = new LangConfigCache(new ConfigFile(this, "lang"));
+        mainConfig = new ConfigFile(this, "config");
+        langConfig = new ConfigFile(this, "lang");
 
         framework = new CommandFramework(this);
+        SimpleOfflinePlayer.load(this);
 
         registerListeners();
         registerCommands();
     }
 
+    public void onDisable() {
+        try {
+            SimpleOfflinePlayer.save(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void registerCommands() {
         new FactionHelpCommand();
+        new FactionDisbandCommand();
         new FactionCreateCommand();
+        new FactionVersionCommand();
+        new FactionInviteCommand();
+        new FactionJoinCommand();
     }
 
     private void registerListeners() {
-
+        Bukkit.getPluginManager().registerEvents(new ProfileListeners(), this);
     }
 
     public static Nebula getInstance() {

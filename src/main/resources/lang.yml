@@ -46,13 +46,29 @@ FACTION_HELP:
       - "&eTo view other pages, use &a/f help <page#>."
       - "&8&m-----------------------------------------------------"
 ANNOUNCEMENTS:
+  FACTION:
+    PLAYER_INVITED: "&6%PLAYER%&e has invited &6%INVITED_PLAYER%&e to the faction!"
+    PLAYER_JOINED: "&6%PLAYER%&e has joined your faction!"
   FACTION_CREATED: "&6%PLAYER% &ehas created a new faction named &6%NAME%&e."
+  FACTION_DISBANDED: "&6%PLAYER% &ehas disbanded &6%NAME%&e!"
 TOO_FEW_ARGS:
   CREATE: "&cToo few arguments. &eUse like this: &b/f create &3<faction tag>"
+  INVITE: "&cToo few arguments. &eUse like this: &b/f invite &3<player>"
+  JOIN: "&cToo few arguments. &eUse like this: &b/f join &3<player/faction>"
+FACTION_OTHER:
+  INVITED_TO_JOIN: "&6You&e have been invited to join &6%FACTION%&e. &7(Click to join)"
+  JOINED: "&eYou joined &6%FACTION%&e."
 ERROR:
+  NOT_INVITED: "&cNo faction or player found with that name that has invited you."
+  NOT_ONLINE: "&cThat player is not online!"
+  INVITE_YOURSELF: "&cYou can't invite yourself!"
+  INVITE_MEMBER: "&cThat player is already in your faction!"
+  ALREADY_INVITED: "&cThat player has already been invited!"
   NOT_IN_FACTION: "&cYou're not in a faction!"
   ALREADY_IN_FACTION: "&cYou're already in a faction!"
   NOT_ALPHANUMERIC: "&cFaction tag must be alphanumeric!"
   BLOCKED_NAME: "&cThat faction tag is blacklisted!"
   TAG_TOO_SHORT: "&cFaction tag must be over 3 characters long!"
   TAG_TOO_LONG: "&cFaction tag must be under 14 characters long!"
+  NOT_LEADER: "&cYou must be the leader of the faction to do this!"
+  NOT_OFFICER_OR_LEADER: "&cYou must be either an officer or the leader of the faction to do this!"

@@ -20,14 +20,14 @@ public class FactionCreateCommand extends FactionCommand {
         Player player = command.getPlayer();
 
         if (command.getArgs().length < 1) {
-            player.sendMessage(langConfigCache.getTooFewArguments().get("CREATE"));
+            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.CREATE"));
             return;
         }
 
-        Profile profile = Profile.getByPlayer(player);
+        Profile profile = Profile.getByUuid(player.getUniqueId());
 
         if (profile.getFaction() != null) {
-            player.sendMessage(langConfigCache.getErrors().get("ALREADY_IN_FACTION"));
+            player.sendMessage(langConfig.getString("ERROR.ALREADY_IN_FACTION"));
             return;
         }
 
@@ -38,30 +38,30 @@ public class FactionCreateCommand extends FactionCommand {
 
         String name = sb.toString().trim().replace(" ", "");
 
-        if (name.length() < mainConfigCache.getFactionNameLimit()[0]) {
-            player.sendMessage(langConfigCache.getErrors().get("TAG_TOO_SHORT"));
+        if (name.length() < mainConfig.getInt("FACTION_NAME.MIN_CHARACTERS")) {
+            player.sendMessage(langConfig.getString("ERROR.TAG_TOO_SHORT"));
             return;
         }
 
-        if (name.length() > mainConfigCache.getFactionNameLimit()[1]) {
-            player.sendMessage(langConfigCache.getErrors().get("TAG_TOO_LONG"));
+        if (name.length() > mainConfig.getInt("FACTION_NAME.MAX_CHARACTERS")) {
+            player.sendMessage(langConfig.getString("ERROR.TAG_TOO_LONG"));
             return;
         }
 
         if (!(StringUtils.isAlphanumeric(name))) {
-            player.sendMessage(langConfigCache.getErrors().get("NOT_ALPHANUMERIC"));
+            player.sendMessage(langConfig.getString("ERROR.NOT_ALPHANUMERIC"));
             return;
         }
 
-        for (String string : mainConfigCache.getBlockedFactionNames()) {
+        for (String string : mainConfig.getStringList("FACTION_NAME.BLOCKED_NAMES")) {
             if (name.contains(string)) {
-                player.sendMessage(langConfigCache.getErrors().get("BLOCKED_NAME"));
+                player.sendMessage(langConfig.getString("ERROR.BLOCKED_NAME"));
                 return;
             }
         }
 
-        PlayerFaction playerFaction = new PlayerFaction(name);
+        PlayerFaction playerFaction = new PlayerFaction(name, player.getUniqueId(), null);
         profile.setFaction(playerFaction);
-        Bukkit.broadcastMessage(langConfigCache.getAnnouncements().get("FACTION_CREATED").replace("%PLAYER%", player.getName()).replace("%NAME%", name));
+        Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION_CREATED").replace("%PLAYER%", player.getName()).replace("%NAME%", name));
     }
 }

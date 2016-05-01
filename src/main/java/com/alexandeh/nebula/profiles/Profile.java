@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /*
  * Copyright (c) 2016, Alexander Maxwell. All rights reserved.
@@ -45,21 +44,27 @@ public class Profile {
     private static Set<Profile> profiles = new HashSet<>();
 
     private PlayerFaction faction;
-    private Player player;
+    private int kills;
+    private int deaths;
+    private UUID uuid;
 
-    public Profile(Player player) {
-        this.player = player;
+    public Profile(UUID uuid) {
+        this.uuid = uuid;
 
         profiles.add(this);
     }
 
-    public static Profile getByPlayer(Player player) {
+    public Profile(Player player) {
+        this(player.getUniqueId());
+    }
+
+    public static Profile getByUuid(UUID uuid) {
         for (Profile profile : getProfiles()) {
-            if (profile.getPlayer().getName().equals(player.getName())) {
+            if (profile.getUuid().equals(uuid)) {
                 return profile;
             }
         }
-        return new Profile(player);
+        return new Profile(uuid);
     }
 
     public static Set<Profile> getProfiles() {

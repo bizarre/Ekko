@@ -43,25 +43,25 @@ public class Faction {
     private String name, home;
     private UUID uuid;
 
-    public Faction(String name) {
+    public Faction(String name, UUID uuid) {
         this.name = name;
+        this.uuid = uuid;
 
-        uuid = UUID.randomUUID();
+        if (uuid == null) {
+            this.uuid = UUID.randomUUID();
         /*
         "Only after generating 1 billion UUIDs every second for the next 100 years, the probability of creating just one duplicate would be about 50%." - Wikipedia
         while (getByUuid(uuid) != null) {
             uuid = UUID.randomUUID();
         }*/
+        }
+        factions.add(this);
     }
 
-    public Faction(String name, UUID uuid) {
-        this.name = name;
-        this.uuid = uuid;
-    }
 
     public static Faction getByName(String name) {
         for (Faction faction : getFactions()) {
-            if (faction.getName().equals(name)) {
+            if (faction.getName().equalsIgnoreCase(name)) {
                 return faction;
             }
         }

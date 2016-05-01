@@ -1,12 +1,13 @@
 package com.alexandeh.nebula.factions.type;
 
 import com.alexandeh.nebula.factions.Faction;
+import com.alexandeh.nebula.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /*
  * Copyright (c) 2016, Alexander Maxwell. All rights reserved.
@@ -41,18 +42,39 @@ import java.util.UUID;
 public class PlayerFaction extends Faction {
 
     private UUID leader;
-    private List<UUID> officers;
-    private List<UUID> members;
+    private List<UUID> officers, members;
     private BigDecimal deathsTillRaidable;
     private String announcement;
     private int[] freezeInformation;
+    private Map<UUID, UUID> invitedPlayers;
 
-    public PlayerFaction(String name) {
-        super(name);
+    public PlayerFaction(String name, UUID leader, UUID uuid) {
+        super(name, uuid);
+
+        this.leader = leader;
+
+        officers = new ArrayList<>();
+        members = new ArrayList<>();
+        invitedPlayers = new HashMap<>();
     }
 
-    public PlayerFaction(String name, UUID uuid) {
-        super(name, uuid);
+    public List<UUID> getAllPlayerUuids() {
+        List<UUID> toReturn = new ArrayList<>();
+
+        toReturn.add(leader);
+        toReturn.addAll(officers);
+        toReturn.addAll(members);
+
+        return toReturn;
+    }
+
+    public void sendMessage(String message) {
+        for (UUID uuid : getAllPlayerUuids()) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.sendMessage(message);
+            }
+        }
     }
 
     public static PlayerFaction getByPlayer(Player player) {
@@ -61,6 +83,23 @@ public class PlayerFaction extends Faction {
                 PlayerFaction playerFaction = (PlayerFaction) faction;
                 if (playerFaction.getLeader().equals(player.getUniqueId()) || playerFaction.getOfficers().contains(player.getUniqueId()) || playerFaction.getMembers().contains(player.getUniqueId())) {
                     return playerFaction;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static PlayerFaction getByPlayerName(String name) {
+        for (Faction faction : Faction.getFactions()) {
+            if (faction instanceof PlayerFaction) { //TODO: Remove if no other faction type added...
+                PlayerFaction playerFaction = (PlayerFaction) faction;
+                for (UUID uuid : playerFaction.getAllPlayerUuids()) {
+                    SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(uuid);
+                    if (offlinePlayer != null) {
+                        if (offlinePlayer.getName().equalsIgnoreCase(name)) {
+                            return playerFaction;
+                        }
+                    }
                 }
             }
         }

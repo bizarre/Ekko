@@ -1,7 +1,7 @@
 package com.alexandeh.nebula.factions;
 
 import com.alexandeh.nebula.Nebula;
-import com.alexandeh.nebula.files.ConfigCache;
+import com.alexandeh.nebula.files.ConfigFile;
 
 /**
  * Copyright 2016 Alexander Maxwell
@@ -12,8 +12,8 @@ import com.alexandeh.nebula.files.ConfigCache;
 public class FactionCommand {
 
     public Nebula main = Nebula.getInstance();
-    public ConfigCache.LangConfigCache langConfigCache = main.getLangConfigCache();
-    public ConfigCache.MainConfigCache mainConfigCache = main.getMainConfigCache();
+    public ConfigFile langConfig = main.getLangConfig();
+    public ConfigFile mainConfig = main.getMainConfig();
 
     public FactionCommand() {
         main.getFramework().registerCommands(this);
