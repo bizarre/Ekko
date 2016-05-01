@@ -1,13 +1,10 @@
-package com.alexandeh.nebula;
+package com.alexandeh.nebula.factions;
 
-import com.alexandeh.nebula.factions.commands.FactionCreateCommand;
-import com.alexandeh.nebula.factions.commands.FactionHelpCommand;
-import com.alexandeh.nebula.files.ConfigCache.LangConfigCache;
-import com.alexandeh.nebula.files.ConfigCache.MainConfigCache;
-import com.alexandeh.nebula.files.ConfigFile;
-import com.alexandeh.nebula.utils.command.CommandFramework;
 import lombok.Getter;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /*
  * Copyright (c) 2016, Alexander Maxwell. All rights reserved.
@@ -39,36 +36,48 @@ import org.bukkit.plugin.java.JavaPlugin;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 @Getter
-public class Nebula extends JavaPlugin {
+public class Faction {
 
-    private static Nebula instance;
+    private static Set<Faction> factions = new HashSet<>();
 
-    private CommandFramework framework;
-    private MainConfigCache mainConfigCache;
-    private LangConfigCache langConfigCache;
+    private String name, home;
+    private UUID uuid;
 
-    public void onEnable() {
-        instance = this;
+    public Faction(String name) {
+        this.name = name;
 
-        mainConfigCache = new MainConfigCache(new ConfigFile(this, "config"));
-        langConfigCache = new LangConfigCache(new ConfigFile(this, "lang"));
-
-        framework = new CommandFramework(this);
-
-        registerListeners();
-        registerCommands();
+        uuid = UUID.randomUUID();
+        /*
+        "Only after generating 1 billion UUIDs every second for the next 100 years, the probability of creating just one duplicate would be about 50%." - Wikipedia
+        while (getByUuid(uuid) != null) {
+            uuid = UUID.randomUUID();
+        }*/
     }
 
-    private void registerCommands() {
-        new FactionHelpCommand();
-        new FactionCreateCommand();
+    public Faction(String name, UUID uuid) {
+        this.name = name;
+        this.uuid = uuid;
     }
 
-    private void registerListeners() {
-
+    public static Faction getByName(String name) {
+        for (Faction faction : getFactions()) {
+            if (faction.getName().equals(name)) {
+                return faction;
+            }
+        }
+        return null;
     }
 
-    public static Nebula getInstance() {
-        return instance;
+    public static Faction getByUuid(UUID uuid) {
+        for (Faction faction : getFactions()) {
+            if (faction.getUuid().equals(uuid)) {
+                return faction;
+            }
+        }
+        return null;
+    }
+
+    public static Set<Faction> getFactions() {
+        return factions;
     }
 }

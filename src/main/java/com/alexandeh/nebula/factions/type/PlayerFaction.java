@@ -1,13 +1,12 @@
-package com.alexandeh.nebula;
+package com.alexandeh.nebula.factions.type;
 
-import com.alexandeh.nebula.factions.commands.FactionCreateCommand;
-import com.alexandeh.nebula.factions.commands.FactionHelpCommand;
-import com.alexandeh.nebula.files.ConfigCache.LangConfigCache;
-import com.alexandeh.nebula.files.ConfigCache.MainConfigCache;
-import com.alexandeh.nebula.files.ConfigFile;
-import com.alexandeh.nebula.utils.command.CommandFramework;
+import com.alexandeh.nebula.factions.Faction;
 import lombok.Getter;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.Player;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 
 /*
  * Copyright (c) 2016, Alexander Maxwell. All rights reserved.
@@ -39,36 +38,32 @@ import org.bukkit.plugin.java.JavaPlugin;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 @Getter
-public class Nebula extends JavaPlugin {
+public class PlayerFaction extends Faction {
 
-    private static Nebula instance;
+    private UUID leader;
+    private List<UUID> officers;
+    private List<UUID> members;
+    private BigDecimal deathsTillRaidable;
+    private String announcement;
+    private int[] freezeInformation;
 
-    private CommandFramework framework;
-    private MainConfigCache mainConfigCache;
-    private LangConfigCache langConfigCache;
-
-    public void onEnable() {
-        instance = this;
-
-        mainConfigCache = new MainConfigCache(new ConfigFile(this, "config"));
-        langConfigCache = new LangConfigCache(new ConfigFile(this, "lang"));
-
-        framework = new CommandFramework(this);
-
-        registerListeners();
-        registerCommands();
+    public PlayerFaction(String name) {
+        super(name);
     }
 
-    private void registerCommands() {
-        new FactionHelpCommand();
-        new FactionCreateCommand();
+    public PlayerFaction(String name, UUID uuid) {
+        super(name, uuid);
     }
 
-    private void registerListeners() {
-
-    }
-
-    public static Nebula getInstance() {
-        return instance;
+    public static PlayerFaction getByPlayer(Player player) {
+        for (Faction faction : Faction.getFactions()) {
+            if (faction instanceof PlayerFaction) { //TODO: Remove if no other faction type added...
+                PlayerFaction playerFaction = (PlayerFaction) faction;
+                if (playerFaction.getLeader().equals(player.getUniqueId()) || playerFaction.getOfficers().contains(player.getUniqueId()) || playerFaction.getMembers().contains(player.getUniqueId())) {
+                    return playerFaction;
+                }
+            }
+        }
+        return null;
     }
 }

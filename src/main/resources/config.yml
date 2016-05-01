@@ -1,0 +1,5 @@
+FACTION_NAME:
+  MAX_CHARACTERS: 14
+  MIN_CHARACTERS: 3
+  BLOCKED_NAMES:
+    - "hcteams" # ;)

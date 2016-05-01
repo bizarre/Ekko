@@ -1,13 +1,12 @@
-package com.alexandeh.nebula;
+package com.alexandeh.nebula.profiles;
 
-import com.alexandeh.nebula.factions.commands.FactionCreateCommand;
-import com.alexandeh.nebula.factions.commands.FactionHelpCommand;
-import com.alexandeh.nebula.files.ConfigCache.LangConfigCache;
-import com.alexandeh.nebula.files.ConfigCache.MainConfigCache;
-import com.alexandeh.nebula.files.ConfigFile;
-import com.alexandeh.nebula.utils.command.CommandFramework;
+import com.alexandeh.nebula.factions.type.PlayerFaction;
 import lombok.Getter;
-import org.bukkit.plugin.java.JavaPlugin;
+import lombok.Setter;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * Copyright (c) 2016, Alexander Maxwell. All rights reserved.
@@ -39,36 +38,31 @@ import org.bukkit.plugin.java.JavaPlugin;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 @Getter
-public class Nebula extends JavaPlugin {
+@Setter
+public class Profile {
 
-    private static Nebula instance;
 
-    private CommandFramework framework;
-    private MainConfigCache mainConfigCache;
-    private LangConfigCache langConfigCache;
+    private static Set<Profile> profiles = new HashSet<>();
 
-    public void onEnable() {
-        instance = this;
+    private PlayerFaction faction;
+    private Player player;
 
-        mainConfigCache = new MainConfigCache(new ConfigFile(this, "config"));
-        langConfigCache = new LangConfigCache(new ConfigFile(this, "lang"));
+    public Profile(Player player) {
+        this.player = player;
 
-        framework = new CommandFramework(this);
-
-        registerListeners();
-        registerCommands();
+        profiles.add(this);
     }
 
-    private void registerCommands() {
-        new FactionHelpCommand();
-        new FactionCreateCommand();
+    public static Profile getByPlayer(Player player) {
+        for (Profile profile : getProfiles()) {
+            if (profile.getPlayer().getName().equals(player.getName())) {
+                return profile;
+            }
+        }
+        return new Profile(player);
     }
 
-    private void registerListeners() {
-
-    }
-
-    public static Nebula getInstance() {
-        return instance;
+    public static Set<Profile> getProfiles() {
+        return profiles;
     }
 }
