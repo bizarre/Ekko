@@ -15,20 +15,27 @@ import org.bukkit.entity.Player;
  * Use and or redistribution of compiled JAR file and or source code is permitted only if given
  * explicit permission from original author: Alexander Maxwell
  */
-public class FactionCreateCommand extends FactionCommand {
-    @Command(name = "f.create", aliases = {"faction.create", "factions.create"})
+public class FactionRenameCommand extends FactionCommand {
+    @Command(name = "f.tag", aliases = {"faction.rag", "factions.tag", "factions.rename", "f.rename", "faction.rename"})
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
         if (command.getArgs().length < 1) {
-            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.CREATE"));
+            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.RENAME"));
             return;
         }
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
 
-        if (profile.getFaction() != null) {
-            player.sendMessage(langConfig.getString("ERROR.ALREADY_IN_FACTION"));
+        if (profile.getFaction() == null) {
+            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
+            return;
+        }
+
+        PlayerFaction playerFaction = profile.getFaction();
+
+        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("nebula.admin")) {
+            player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
             return;
         }
 
@@ -61,13 +68,21 @@ public class FactionCreateCommand extends FactionCommand {
             }
         }
 
-        if (Faction.getByName(name) != null) {
-            player.sendMessage(langConfig.getString("ERROR.NAME_TAKEN"));
-            return;
+        Faction faction = Faction.getByName(name);
+
+        if (faction != null) {
+            if (faction.equals(playerFaction)) {
+                if (faction.getName().equals(name)) { //allow case changing but not exact duplicates. e.g "Faction" -> "factioN"
+                    player.sendMessage(langConfig.getString("ERROR.NAME_TAKEN"));
+                    return;
+                }
+            } else {
+                player.sendMessage(langConfig.getString("ERROR.NAME_TAKEN"));
+                return;
+            }
         }
 
-        PlayerFaction playerFaction = new PlayerFaction(name, player.getUniqueId(), null);
-        profile.setFaction(playerFaction);
-        Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION_CREATED").replace("%PLAYER%", player.getName()).replace("%NAME%", name));
+        Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION_RENAMED").replace("%OLD_NAME%", playerFaction.getName()).replace("%NEW_NAME%", name).replace("%PLAYER%", player.getName()));
+        playerFaction.setName(name);
     }
 }

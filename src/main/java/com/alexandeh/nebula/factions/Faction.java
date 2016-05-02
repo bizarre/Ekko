@@ -1,6 +1,7 @@
 package com.alexandeh.nebula.factions;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,7 +41,9 @@ public class Faction {
 
     private static Set<Faction> factions = new HashSet<>();
 
+    @Setter
     private String name, home;
+
     private UUID uuid;
 
     public Faction(String name, UUID uuid) {

@@ -3,6 +3,7 @@ package com.alexandeh.nebula.factions.type;
 import com.alexandeh.nebula.factions.Faction;
 import com.alexandeh.nebula.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -39,6 +40,7 @@ import java.util.*;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 @Getter
+@Setter
 public class PlayerFaction extends Faction {
 
     private UUID leader;

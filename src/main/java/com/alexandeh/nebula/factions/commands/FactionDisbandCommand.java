@@ -42,9 +42,8 @@ public class FactionDisbandCommand extends FactionCommand {
             }
         }
 
-        Bukkit.broadcastMessage(langConfig.getString("ERROR.FACTION_DISBANDED").replace("%PLAYER%", player.getName()).replace("%NAME%", playerFaction.getName()));
+        Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION_DISBANDED").replace("%PLAYER%", player.getName()).replace("%NAME%", playerFaction.getName()));
 
         Faction.getFactions().remove(playerFaction);
-        System.gc();
     }
 }

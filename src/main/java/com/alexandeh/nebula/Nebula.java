@@ -77,6 +77,9 @@ public class Nebula extends JavaPlugin {
         new FactionVersionCommand();
         new FactionInviteCommand();
         new FactionJoinCommand();
+        new FactionRenameCommand();
+        new FactionPromoteCommand();
+        new FactionDemoteCommand();
     }
 
     private void registerListeners() {
