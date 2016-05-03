@@ -21,7 +21,7 @@ public class FactionLeaderCommand extends FactionCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
-        if (command.getArgs().length < 1) {
+        if (command.getArgs().length == 0) {
             player.sendMessage(langConfig.getString("TOO_FEW_ARGS.LEADER"));
             return;
         }
@@ -50,7 +50,7 @@ public class FactionLeaderCommand extends FactionCommand {
                 uuid = offlinePlayer.getUuid();
                 name = offlinePlayer.getName();
             } else {
-                player.sendMessage(langConfig.getString("ERROR.NOT_ONLINE"));
+                player.sendMessage(langConfig.getString("ERROR.NOT_ONLINE").replace("%PLAYER%", command.getArgs(0)));
                 return;
             }
         } else {

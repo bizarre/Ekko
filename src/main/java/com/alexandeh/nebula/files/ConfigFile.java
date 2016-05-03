@@ -53,7 +53,7 @@ public class ConfigFile {
             file.getParentFile().mkdir();
         }
 
-        plugin.saveResource(name + ".yml", true);
+        plugin.saveResource(name + ".yml", true); //TODO: Change when finished (so configs aren't overwritten)
 
         configuration = YamlConfiguration.loadConfiguration(file);
     }

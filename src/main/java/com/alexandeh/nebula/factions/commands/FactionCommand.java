@@ -18,5 +18,4 @@ public class FactionCommand {
     public FactionCommand() {
         main.getFramework().registerCommands(this);
     }
-
 }

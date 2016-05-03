@@ -19,7 +19,7 @@ public class FactionJoinCommand extends FactionCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
-        if (command.getArgs().length < 1) {
+        if (command.getArgs().length == 0) {
             player.sendMessage(langConfig.getString("TOO_FEW_ARGS.JOIN"));
             return;
         }
@@ -59,6 +59,4 @@ public class FactionJoinCommand extends FactionCommand {
 
         Bukkit.getPluginManager().callEvent(new PlayerJoinFactionEvent(player, playerFaction));
     }
-
-
 }

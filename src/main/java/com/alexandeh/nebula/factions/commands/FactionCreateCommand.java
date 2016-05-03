@@ -20,7 +20,7 @@ public class FactionCreateCommand extends FactionCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
-        if (command.getArgs().length < 1) {
+        if (command.getArgs().length == 0) {
             player.sendMessage(langConfig.getString("TOO_FEW_ARGS.CREATE"));
             return;
         }

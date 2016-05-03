@@ -22,7 +22,7 @@ public class FactionInviteCommand extends FactionCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
-        if (command.getArgs().length < 1) {
+        if (command.getArgs().length == 0) {
             player.sendMessage(langConfig.getString("TOO_FEW_ARGS.INVITE"));
             return;
         }
@@ -57,7 +57,7 @@ public class FactionInviteCommand extends FactionCommand {
                 uuid = offlinePlayer.getUuid();
                 name = offlinePlayer.getName();
             } else {
-                player.sendMessage(langConfig.getString("ERROR.NOT_ONLINE"));
+                player.sendMessage(langConfig.getString("ERROR.NOT_ONLINE").replace("%PLAYER%", command.getArgs(0)));
                 return;
             }
         } else {
@@ -66,13 +66,13 @@ public class FactionInviteCommand extends FactionCommand {
         }
 
         if (playerFaction.getAllPlayerUuids().contains(uuid)) {
-            player.sendMessage(langConfig.getString("ERROR.INVITE_MEMBER"));
+            player.sendMessage(langConfig.getString("ERROR.INVITE_MEMBER").replace("%PLAYER%", name));
             return;
         }
 
 
         if (playerFaction.getInvitedPlayers().containsKey(uuid)) {
-            player.sendMessage(langConfig.getString("ERROR.ALREADY_INVITED"));
+            player.sendMessage(langConfig.getString("ERROR.ALREADY_INVITED").replace("%PLAYER%", name));
             return;
         }
 
