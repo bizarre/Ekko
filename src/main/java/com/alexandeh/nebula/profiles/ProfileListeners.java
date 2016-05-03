@@ -20,5 +20,4 @@ public class ProfileListeners implements Listener {
             new SimpleOfflinePlayer(player);
         }
     }
-
 }

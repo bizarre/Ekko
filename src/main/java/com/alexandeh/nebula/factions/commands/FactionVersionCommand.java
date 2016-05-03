@@ -1,6 +1,5 @@
 package com.alexandeh.nebula.factions.commands;
 
-import com.alexandeh.nebula.factions.FactionCommand;
 import com.alexandeh.nebula.utils.command.Command;
 import com.alexandeh.nebula.utils.command.CommandArgs;
 import org.bukkit.ChatColor;

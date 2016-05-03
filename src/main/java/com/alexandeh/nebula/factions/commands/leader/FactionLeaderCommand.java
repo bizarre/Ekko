@@ -1,6 +1,6 @@
-package com.alexandeh.nebula.factions.commands;
+package com.alexandeh.nebula.factions.commands.leader;
 
-import com.alexandeh.nebula.factions.FactionCommand;
+import com.alexandeh.nebula.factions.commands.FactionCommand;
 import com.alexandeh.nebula.factions.type.PlayerFaction;
 import com.alexandeh.nebula.profiles.Profile;
 import com.alexandeh.nebula.utils.command.Command;
@@ -16,13 +16,13 @@ import java.util.UUID;
  * Use and or redistribution of compiled JAR file and or source code is permitted only if given
  * explicit permission from original author: Alexander Maxwell
  */
-public class FactionPromoteCommand extends FactionCommand {
+public class FactionLeaderCommand extends FactionCommand {
     @Command(name = "f.promote", aliases = {"faction.promote", "factions.promote", "f.mod", "factions.mod", "faction.mod", "f.officer", "factions.officer", "faction.officer", "faction.captain", "f.captain", "faction.captain"})
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
         if (command.getArgs().length < 1) {
-            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.PROMOTE"));
+            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.LEADER"));
             return;
         }
 
@@ -40,17 +40,11 @@ public class FactionPromoteCommand extends FactionCommand {
             return;
         }
 
-        if (command.getArgs(0).equalsIgnoreCase(player.getName()) && player.getUniqueId().equals(playerFaction.getLeader())) {
-            player.sendMessage(langConfig.getString("ERROR.PROMOTE_YOURSELF"));
-            return;
-        }
-
-
         UUID uuid;
         String name;
-        Player toPromote = Bukkit.getPlayer(command.getArgs(0));
+        Player toLeader = Bukkit.getPlayer(command.getArgs(0));
 
-        if (toPromote == null) {
+        if (toLeader == null) {
             SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByName(command.getArgs(0));
             if (offlinePlayer != null) {
                 uuid = offlinePlayer.getUuid();
@@ -60,8 +54,8 @@ public class FactionPromoteCommand extends FactionCommand {
                 return;
             }
         } else {
-            uuid = toPromote.getUniqueId();
-            name = toPromote.getName();
+            uuid = toLeader.getUniqueId();
+            name = toLeader.getName();
         }
 
         if (!playerFaction.getAllPlayerUuids().contains(uuid)) {
@@ -69,14 +63,17 @@ public class FactionPromoteCommand extends FactionCommand {
             return;
         }
 
-        if (playerFaction.getOfficers().contains(uuid)) {
-            player.sendMessage(langConfig.getString("ERROR.ALREADY_OFFICER"));
+        if (player.getUniqueId().equals(playerFaction.getLeader()) && uuid.equals(playerFaction.getLeader())) {
+            player.sendMessage(langConfig.getString("ERROR.ALREADY_LEADER"));
             return;
         }
 
         playerFaction.getMembers().remove(uuid);
-        playerFaction.getOfficers().add(uuid);
+        playerFaction.getOfficers().remove(uuid);
 
-        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_PROMOTED").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
+        playerFaction.getOfficers().add(player.getUniqueId());
+        playerFaction.setLeader(uuid);
+
+        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_TRANSFER_LEADERSHIP").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
     }
 }

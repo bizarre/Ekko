@@ -48,9 +48,11 @@ FACTION_HELP:
 ANNOUNCEMENTS:
   FACTION:
     PLAYER_INVITED: "&6%PLAYER%&e has invited &6%INVITED_PLAYER%&e to the faction!"
+    PLAYER_UNINVITED: "&6%PLAYER%&e has cancelled &6%INVITED_PLAYER%&e's invite to the faction!"
     PLAYER_JOINED: "&6%PLAYER%&e has joined your faction!"
     PLAYER_PROMOTED: "&6%PLAYER%&e has been promoted to an officer by &6%LEADER%&e!"
     PLAYER_PROMOTED: "&6%PLAYER%&e has been demoted to a member by &6%LEADER%&e!"
+    PLAYER_TRANSFER_LEADERSHIP: "&6%PLAYER%&e has been made leader by &6%LEADER%&e!"
   FACTION_CREATED: "&6%PLAYER% &ehas created a new faction named &6%NAME%&e!"
   FACTION_DISBANDED: "&6%PLAYER% &ehas disbanded &6%NAME%&e!"
   FACTION_RENAMED: "&6%PLAYER% &ehas renamed &6%OLD_NAME%&e to &6%NEW_NAME%&e!"
@@ -61,10 +63,18 @@ TOO_FEW_ARGS:
   RENAME: "&cToo few arguments. &eUse like this: &b/f tag &3<new faction tag>"
   PROMOTE: "&cToo few arguments. &eUse like this: &b/f promote &3<player>"
   DEMOTE: "&cToo few arguments. &eUse like this: &b/f demote &3<player>"
+  LEADER: "&cToo few arguments. &eUse like this: &b/f leader &3<player>"
+  UNINVITE: "&cToo few arguments. &eUse like this: &b/f uninvite &3<player>"
 FACTION_OTHER:
   INVITED_TO_JOIN: "&6You&e have been invited to join &6%FACTION%&e. &7(Click to join)"
   JOINED: "&eYou joined &6%FACTION%&e."
+  CHAT_CHANGED:
+    PUBLIC: "&3You are now in public chat."
+    FACTION: "&3You are now in faction chat."
+    ALLY: "&3You are now in alliance chat."
 ERROR:
+  MUST_BE_IN_FACTION_FOR_CHAT_TYPE: "&cYou must be in a faction to use this chat mode!"
+  ALREADY_LEADER: "&cYou're already the leader!"
   NOT_OFFICER: "&cThat player is not an officer!"
   ALREADY_OFFICER: "&cThat player is already an officer!"
   NOT_IN_YOUR_FACTION: "&cThat player is not in your faction!"
@@ -76,6 +86,7 @@ ERROR:
   INVITE_YOURSELF: "&cYou can't invite yourself!"
   INVITE_MEMBER: "&cThat player is already in your faction!"
   ALREADY_INVITED: "&cThat player has already been invited!"
+  NEVER_INVITED: "&cThat player has not been invited to your faction!"
   NOT_IN_FACTION: "&cYou're not in a faction!"
   ALREADY_IN_FACTION: "&cYou're already in a faction!"
   NOT_ALPHANUMERIC: "&cFaction tag must be alphanumeric!"

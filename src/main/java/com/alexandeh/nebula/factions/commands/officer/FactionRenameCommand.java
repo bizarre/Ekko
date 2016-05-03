@@ -1,7 +1,7 @@
-package com.alexandeh.nebula.factions.commands;
+package com.alexandeh.nebula.factions.commands.officer;
 
 import com.alexandeh.nebula.factions.Faction;
-import com.alexandeh.nebula.factions.FactionCommand;
+import com.alexandeh.nebula.factions.commands.FactionCommand;
 import com.alexandeh.nebula.factions.type.PlayerFaction;
 import com.alexandeh.nebula.profiles.Profile;
 import com.alexandeh.nebula.utils.command.Command;

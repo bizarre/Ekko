@@ -44,12 +44,15 @@ public class Profile {
     private static Set<Profile> profiles = new HashSet<>();
 
     private PlayerFaction faction;
+    private ProfileChatType chatType;
     private int kills;
     private int deaths;
     private UUID uuid;
 
     public Profile(UUID uuid) {
         this.uuid = uuid;
+
+        chatType = ProfileChatType.PUBLIC;
 
         profiles.add(this);
     }

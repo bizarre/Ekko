@@ -1,7 +1,7 @@
 package com.alexandeh.nebula.factions.commands;
 
 import com.alexandeh.nebula.factions.Faction;
-import com.alexandeh.nebula.factions.FactionCommand;
+import com.alexandeh.nebula.factions.events.player.PlayerCreateFactionEvent;
 import com.alexandeh.nebula.factions.type.PlayerFaction;
 import com.alexandeh.nebula.profiles.Profile;
 import com.alexandeh.nebula.utils.command.Command;
@@ -68,6 +68,9 @@ public class FactionCreateCommand extends FactionCommand {
 
         PlayerFaction playerFaction = new PlayerFaction(name, player.getUniqueId(), null);
         profile.setFaction(playerFaction);
+
         Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION_CREATED").replace("%PLAYER%", player.getName()).replace("%NAME%", name));
+
+        Bukkit.getPluginManager().callEvent(new PlayerCreateFactionEvent(player, playerFaction));
     }
 }

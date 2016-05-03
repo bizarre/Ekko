@@ -1,6 +1,6 @@
-package com.alexandeh.nebula.factions.commands;
+package com.alexandeh.nebula.factions.commands.leader;
 
-import com.alexandeh.nebula.factions.FactionCommand;
+import com.alexandeh.nebula.factions.commands.FactionCommand;
 import com.alexandeh.nebula.factions.type.PlayerFaction;
 import com.alexandeh.nebula.profiles.Profile;
 import com.alexandeh.nebula.utils.command.Command;
@@ -16,13 +16,13 @@ import java.util.UUID;
  * Use and or redistribution of compiled JAR file and or source code is permitted only if given
  * explicit permission from original author: Alexander Maxwell
  */
-public class FactionDemoteCommand extends FactionCommand {
-    @Command(name = "f.demote", aliases = {"faction.demote", "factions.demote", "f.mod", "factions.mod", "faction.mod", "f.officer", "factions.officer", "faction.officer", "faction.captain", "f.captain", "faction.captain"})
+public class FactionPromoteCommand extends FactionCommand {
+    @Command(name = "f.promote", aliases = {"faction.promote", "factions.promote", "f.mod", "factions.mod", "faction.mod", "f.officer", "factions.officer", "faction.officer", "faction.captain", "f.captain", "faction.captain"})
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
         if (command.getArgs().length < 1) {
-            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.DEMOTE"));
+            player.sendMessage(langConfig.getString("TOO_FEW_ARGS.PROMOTE"));
             return;
         }
 
@@ -41,7 +41,7 @@ public class FactionDemoteCommand extends FactionCommand {
         }
 
         if (command.getArgs(0).equalsIgnoreCase(player.getName()) && player.getUniqueId().equals(playerFaction.getLeader())) {
-            player.sendMessage(langConfig.getString("ERROR.DEMOTE_YOURSELF"));
+            player.sendMessage(langConfig.getString("ERROR.PROMOTE_YOURSELF"));
             return;
         }
 
@@ -68,15 +68,15 @@ public class FactionDemoteCommand extends FactionCommand {
             player.sendMessage(langConfig.getString("ERROR.NOT_IN_YOUR_FACTION"));
             return;
         }
-        
-        if (!playerFaction.getOfficers().contains(uuid)) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER"));
+
+        if (playerFaction.getOfficers().contains(uuid)) {
+            player.sendMessage(langConfig.getString("ERROR.ALREADY_OFFICER"));
             return;
         }
 
-        playerFaction.getOfficers().remove(uuid);
-        playerFaction.getMembers().add(uuid);
+        playerFaction.getMembers().remove(uuid);
+        playerFaction.getOfficers().add(uuid);
 
-        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_DEMOTED").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
+        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_PROMOTED").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
     }
 }

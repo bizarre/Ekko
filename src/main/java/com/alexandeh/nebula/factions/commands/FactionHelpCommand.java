@@ -1,6 +1,5 @@
 package com.alexandeh.nebula.factions.commands;
 
-import com.alexandeh.nebula.factions.FactionCommand;
 import com.alexandeh.nebula.utils.command.Command;
 import com.alexandeh.nebula.utils.command.CommandArgs;
 import org.apache.commons.lang.math.NumberUtils;
@@ -19,16 +18,15 @@ public class FactionHelpCommand extends FactionCommand {
         String[] args = command.getArgs();
 
         List<List<String>> help = new ArrayList<>();
-        help.add(langConfig.getStringList("FACTION_HELP.1"));
-        help.add(langConfig.getStringList("FACTION_HELP.2"));
-        help.add(langConfig.getStringList("FACTION_HELP.3"));
-        help.add(langConfig.getStringList("FACTION_HELP.4"));
+        for (String key : langConfig.getConfiguration().getConfigurationSection("FACTION_HELP").getKeys(false)) {
+            help.add(langConfig.getStringList("FACTION_HELP." + key));
+        }
 
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("help")) {
                 if (NumberUtils.isNumber(args[1])) {
                     int page = Integer.parseInt(args[1]);
-                    if (page > 0 && page < 5) {
+                    if (page > 0 && page <= help.size()) {
                         for (String msg : help.get(page - 1)) {
                             command.getSender().sendMessage(msg);
                         }

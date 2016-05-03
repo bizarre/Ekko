@@ -1,11 +1,12 @@
 package com.alexandeh.nebula.factions.commands;
 
 import com.alexandeh.nebula.factions.Faction;
-import com.alexandeh.nebula.factions.FactionCommand;
+import com.alexandeh.nebula.factions.events.player.PlayerJoinFactionEvent;
 import com.alexandeh.nebula.factions.type.PlayerFaction;
 import com.alexandeh.nebula.profiles.Profile;
 import com.alexandeh.nebula.utils.command.Command;
 import com.alexandeh.nebula.utils.command.CommandArgs;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -55,6 +56,8 @@ public class FactionJoinCommand extends FactionCommand {
         playerFaction.getInvitedPlayers().remove(player.getUniqueId());
         playerFaction.getMembers().add(player.getUniqueId());
         profile.setFaction(playerFaction);
+
+        Bukkit.getPluginManager().callEvent(new PlayerJoinFactionEvent(player, playerFaction));
     }
 
 

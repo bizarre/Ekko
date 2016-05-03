@@ -1,4 +1,4 @@
-package com.alexandeh.nebula.factions;
+package com.alexandeh.nebula.factions.commands;
 
 import com.alexandeh.nebula.Nebula;
 import com.alexandeh.nebula.files.ConfigFile;
