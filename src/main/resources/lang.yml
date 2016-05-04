@@ -1,3 +1,6 @@
+# I'm pretty bad at organizing/naming configuration files with these many keys + values.
+# If you feel like you can do a better job, feel free to do so and make a PR.
+# Thanks, Alexandeh/Frog <3
 FACTION_HELP:
     1:
       - "&6&m-----------------------------------------------------"
@@ -74,17 +77,18 @@ FACTION_SHOW:
       - "&7&m-----------------------------------------------------"
 ANNOUNCEMENTS:
   FACTION:
-    PLAYER_INVITED: "&6%PLAYER%&e has invited &6%INVITED_PLAYER%&e to the faction!"
-    PLAYER_UNINVITED: "&6%PLAYER%&e has cancelled &6%UNINVITED_PLAYER%&e's invititation to the faction!"
-    PLAYER_JOINED: "&6%PLAYER%&e has joined your faction!"
-    PLAYER_LEFT: "&6%PLAYER%&e has left your faction!"
-    PLAYER_PROMOTED: "&6%PLAYER%&e has been promoted to an officer by &6%LEADER%&e!"
-    PLAYER_DEMOTED: "&6%PLAYER%&e has been demoted to a member by &6%LEADER%&e!"
-    PLAYER_TRANSFER_LEADERSHIP: "&6%PLAYER%&e has been made leader by &6%LEADER%&e!"
-    PLAYER_SET_HOME: "&3%PLAYER% has updated the faction home location."
+    PLAYER_INVITED: "&ePlayer &a%PLAYER%&e has invited &9%INVITED_PLAYER%&e to the faction"
+    PLAYER_UNINVITED: "&ePlayer &a%PLAYER%&e has cancelled &d%UNINVITED_PLAYER%&e's invititation to the faction"
+    PLAYER_JOINED: "&ePlayer &a%PLAYER%&e has joined the faction"
+    PLAYER_LEFT: "&ePlayer &a%PLAYER%&e has left the faction"
+    PLAYER_PROMOTED: "&ePlayer &a%PLAYER%&e has been promoted to an officer by &f%LEADER%"
+    PLAYER_DEMOTED: "&ePlayer &a%PLAYER%&e has been demoted to a member by &f%LEADER%&"
+    PLAYER_TRANSFER_LEADERSHIP: "&ePlayer &a%PLAYER%&e has been made leader by &f%LEADER%"
+    PLAYER_SET_HOME: "&3%PLAYER% has updated the faction home location"
     PLAYER_FACTION_CHAT: "&3(Team) %PLAYER%:&e %MESSAGE%"
     PLAYER_ALLY_CHAT: "&9(Ally) %PLAYER%:&e %MESSAGE%"
-    PLAYER_SET_ANNOUNCEMENT: "&d%PLAYER%&e changed the faction announcement to &d%MESSAGE%&e"
+    PLAYER_SET_ANNOUNCEMENT: "&d%PLAYER%&e changed the faction announcement to &d%MESSAGE%"
+    PLAYER_KICKED: "&3%PLAYER%&e has kicked&9 %KICKED_PLAYER%&e from the faction"
   FACTION_CREATED: "&eFaction &9%NAME%&e has been &acreated&e by &f%PLAYER%"
   FACTION_DISBANDED: "&eFaction &9%NAME%&e has been &cdisbanded&e by &f%PLAYER%"
   FACTION_RENAMED: "&eFaction &9%OLD_NAME%&e has been &arenamed&e to &9%NEW_NAME%&e by &f%PLAYER%"
@@ -99,15 +103,24 @@ TOO_FEW_ARGS:
   UNINVITE: "&cToo few arguments. &eUse like this: &b/f uninvite &3<player>"
   MESSAGE: "&cToo few arguments. &eUse like this: &b/f msg &3<message>"
   ANNOUNCEMENT: "&cToo few arguments. &eUse like this: &b/f announcement &3<message>"
+  KICK: "&cToo few arguments. &eUse like this: &b/f kick &3<player>"
 FACTION_OTHER:
-  INVITED_TO_JOIN: "&6You&e have been invited to join &6%FACTION%&e. &7(Click to join)"
-  JOINED: "&eYou joined &6%FACTION%&e."
-  LEFT: "&eYou left &6%FACTION%&e."
+  INVITED_TO_JOIN: "&eYou&e have been invited to join &9%FACTION%&e. &7(Click to join)"
+  JOINED: "&eYou joined &9%FACTION%&e."
+  LEFT: "&eYou left &9%FACTION%&e."
+  INVITES:
+    PLAYER_INVITES: "&eYour invites: &7%INVITES%"
+    PLAYER_INVITES_PLACEHOLDER: "&7No pending invites."
+    FACTION_INVITES: "&eInvited to your team: &7%INVITES%"
+    SPLITTER: "&e, &7"
   CHAT_CHANGED:
     PUBLIC: "&3You are now in public chat."
     FACTION: "&3You are now in faction chat."
     ALLY: "&3You are now in alliance chat."
 ERROR:
+  CANT_KICK_OTHER_OFFICER: "&cYou can't kick another officer!"
+  CANT_KICK_LEADER: "&cYou can't kick the leader!"
+  KICK_YOURSELF: "&cYou can't kick yourself!"
   NO_FACTIONS_FOUND: "&cNo factions found with player or name %NAME%."
   CANT_LEAVE_WHEN_LEADER: "&cYou cannot leave as leader!"
   MUST_BE_IN_FACTION_FOR_CHAT_TYPE: "&cYou must be in a faction to use this chat mode!"
@@ -120,7 +133,7 @@ ERROR:
   DEMOTE_YOURSELF: "&cYou cannot demote yourself!"
   NAME_TAKEN: "&7That faction already exists!"
   NOT_INVITED: "&cThat faction hasn't invited you."
-  NOT_ONLINE: "&c%PLAYER% has never joined the server.!"
+  NOT_ONLINE: "&c%PLAYER% has never joined the server!"
   INVITE_YOURSELF: "&cYou can't invite yourself!"
   INVITE_MEMBER: "&c%PLAYER% is already in your faction!"
   ALREADY_INVITED: "&c%PLAYER% has already been invited!"

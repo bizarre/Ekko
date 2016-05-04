@@ -103,20 +103,15 @@ public class FactionShowCommand extends FactionCommand {
                             continue;
                         }
 
-                        if (killFormatEnabled) {
-                            Profile leaderProfile = Profile.getByUuid(offlinePlayer.getUuid());
-                            leaderString = offlineColor + offlinePlayer.getName() + killFormat.replace("%KILLS%", leaderProfile.getKills() + "");
-                        } else {
-                            leaderString = offlineColor + offlinePlayer.getName();
-                        }
+                        leaderString = offlineColor + offlinePlayer.getName();
                     } else {
-                        if (killFormatEnabled) {
-                            Profile leaderProfile = Profile.getByUuid(leader);
-                            leaderString = onlineColor + player.getName() + killFormat.replace("%KILLS%", leaderProfile.getKills() + "");
-                        } else {
-                            leaderString = onlineColor + player.getName();
-                        }
+                        leaderString = onlineColor + leaderPlayer.getName();
                     }
+
+                    if (killFormatEnabled) {
+                        leaderString = leaderString + killFormat.replace("%KILLS%", Profile.getByUuid(leader).getKills() + "");
+                    }
+
                     string = string.replace("%LEADER%", leaderString);
                 }
 
@@ -136,20 +131,24 @@ public class FactionShowCommand extends FactionCommand {
                                 continue;
                             }
 
-                            if (killFormatEnabled) {
-                                Profile officerProfile = Profile.getByUuid(offlinePlayer.getUuid());
-                                officerString = officerString + offlineColor + offlinePlayer.getName() + killFormat.replace("%KILLS%", officerProfile.getKills() + "");
-                            } else {
-                                officerString = officerString + offlineColor + offlinePlayer.getName();
-                            }
+                            officerString = officerString + offlineColor + offlinePlayer.getName();
                         } else {
-                            if (killFormatEnabled) {
-                                Profile officerProfile = Profile.getByUuid(officer.getUniqueId());
-                                officerString = officerString + onlineColor + officer.getName() + killFormat.replace("%KILLS%", officerProfile.getKills() + "");
-                            } else {
-                                officerString = officerString + onlineColor + officer.getName();
-                            }
+                            officerString = officerString + onlineColor + officer.getName();
                         }
+
+                        if (killFormatEnabled) {
+                            officerString = officerString + killFormat.replace("%KILLS%", Profile.getByUuid(uuid).getKills() + "");
+                        }
+
+                        if (splitNamesEnabled) {
+                            officerString = officerString + splitNamesFormat;
+                        }
+                    }
+
+                    string = string.replace("%OFFICERS%", officerString);
+
+                    if (splitNamesEnabled) {
+                        string = string.substring(0, string.lastIndexOf(splitNamesFormat));
                     }
                 }
 
@@ -169,22 +168,25 @@ public class FactionShowCommand extends FactionCommand {
                                 continue;
                             }
 
-                            if (killFormatEnabled) {
-                                Profile memberProfile = Profile.getByUuid(offlinePlayer.getUuid());
-                                memberString = memberString + offlineColor + offlinePlayer.getName() + killFormat.replace("%KILLS%", memberProfile.getKills() + "");
-                            } else {
-                                memberString = memberString + offlineColor + offlinePlayer.getName();
-                            }
+                            memberString = memberString + offlineColor + offlinePlayer.getName();
                         } else {
-                            if (killFormatEnabled) {
-                                Profile memberProfile = Profile.getByUuid(member.getUniqueId());
-                                memberString = memberString + onlineColor + member.getName() + killFormat.replace("%KILLS%", memberProfile.getKills() + "");
-                            } else {
-                                memberString = memberString + onlineColor + member.getName();
-                            }
+                            memberString = memberString + onlineColor + member.getName();
+                        }
+
+                        if (killFormatEnabled) {
+                            memberString = memberString + killFormat.replace("%KILLS%", Profile.getByUuid(uuid).getKills() + "");
+                        }
+
+                        if (splitNamesEnabled) {
+                            memberString = memberString + splitNamesFormat;
                         }
                     }
+
                     string = string.replace("%MEMBERS%", memberString);
+
+                    if (splitNamesEnabled) {
+                        string = string.substring(0, string.lastIndexOf(splitNamesFormat));
+                    }
                 }
 
                 string = string.replace("%DTR%", playerFaction.getDeathsTillRaidable() + "");

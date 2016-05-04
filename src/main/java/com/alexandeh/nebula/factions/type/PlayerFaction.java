@@ -50,7 +50,7 @@ public class PlayerFaction extends Faction {
     private String announcement;
     private int[] freezeInformation;
     private Map<UUID, UUID> invitedPlayers;
-    private double balance;
+    private int balance;
 
     public PlayerFaction(String name, UUID leader, UUID uuid) {
         super(name, uuid);
@@ -68,7 +68,7 @@ public class PlayerFaction extends Faction {
     }
 
     public BigDecimal getMaxDeathsTillRaidable() {
-        return BigDecimal.valueOf(mainConfig.getDouble("FACTION_DTR.STARTING_DTR")).add(BigDecimal.valueOf(mainConfig.getDouble("FACTION_DTR.DTR_PER_PLAYER") * getAllPlayerUuids().size()));
+        return BigDecimal.valueOf(mainConfig.getDouble("FACTION_DTR.STARTING_DTR") + mainConfig.getDouble("FACTION_DTR.DTR_PER_PLAYER") * getAllPlayerUuids().size());
     }
 
     public List<UUID> getAllPlayerUuids() {
@@ -125,5 +125,15 @@ public class PlayerFaction extends Faction {
             }
         }
         return null;
+    }
+
+    public static Set<PlayerFaction> getPlayerFactions() {
+        Set<PlayerFaction> toReturn = new HashSet<>();
+        for (Faction faction : getFactions()) {
+            if (faction instanceof PlayerFaction) {
+                toReturn.add((PlayerFaction) faction);
+            }
+        }
+        return toReturn;
     }
 }

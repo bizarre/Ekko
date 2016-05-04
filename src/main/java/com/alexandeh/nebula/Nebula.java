@@ -93,6 +93,8 @@ public class Nebula extends JavaPlugin {
         new FactionAnnouncementCommand();
         new FactionLeaveCommand();
         new FactionShowCommand();
+        new FactionKickCommand();
+        new FactionInvitesCommand();
     }
 
     private void registerListeners() {

@@ -1,13 +1,18 @@
 package com.alexandeh.nebula.utils.player;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
-import org.bukkit.configuration.file.YamlConfiguration;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Copyright 2016 Alexander Maxwell
@@ -15,10 +20,11 @@ import java.util.*;
  * explicit permission from original author: Alexander Maxwell
  */
 @Getter
-public class SimpleOfflinePlayer {
+public class SimpleOfflinePlayer implements Serializable {
 
     private static Set<SimpleOfflinePlayer> offlinePlayers = new HashSet<>();
 
+    @Setter
     private String name;
     private UUID uuid;
 
@@ -35,27 +41,29 @@ public class SimpleOfflinePlayer {
 
     public static void save(JavaPlugin main) throws IOException {
         if (!(offlinePlayers.isEmpty())) {
-            File file = new File(main.getDataFolder(), "offlineplayers.yml");
+            File file = new File(main.getDataFolder(), "offlineplayers.json");
 
             if (!(file.exists())) {
                 file.createNewFile();
             }
 
-            YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-            for (SimpleOfflinePlayer offlinePlayer : offlinePlayers) {
-                configuration.set(offlinePlayer.getUuid().toString() + ".NAME", offlinePlayer.getName());
-            }
-            configuration.save(file);
+            Writer writer = new FileWriter(file);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(offlinePlayers);
+            writer.write(json);
+            writer.close();
         }
     }
     public static void load(JavaPlugin main) {
-        File file = new File(main.getDataFolder(), "offlineplayers.yml");
+        File file = new File(main.getDataFolder(), "offlineplayers.json");
         if (file.exists()) {
-            YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-            for (String key : configuration.getKeys(false)) {
-                UUID uuid = UUID.fromString(key);
-                String name = configuration.getString(key + ".NAME");
-                getOfflinePlayers().add(new SimpleOfflinePlayer(name, uuid));
+            Gson gson = new Gson();
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                Type type = new TypeToken<Set<SimpleOfflinePlayer>>(){}.getType();
+                offlinePlayers = gson.fromJson(reader, type);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }

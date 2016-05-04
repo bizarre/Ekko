@@ -16,8 +16,13 @@ public class ProfileListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (SimpleOfflinePlayer.getByUuid(player.getUniqueId()) == null) {
+        SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(player.getUniqueId());
+        if (offlinePlayer == null) {
             new SimpleOfflinePlayer(player);
+        } else {
+            if (!(offlinePlayer.getName().equals(player.getName()))) {
+                offlinePlayer.setName(player.getName());
+            }
         }
     }
 }
