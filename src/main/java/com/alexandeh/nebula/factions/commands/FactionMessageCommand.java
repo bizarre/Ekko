@@ -23,7 +23,9 @@ public class FactionMessageCommand extends FactionCommand {
         }
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
+
         PlayerFaction playerFaction = profile.getFaction();
+
         if (playerFaction == null) {
             player.sendMessage(langConfig.getString("ERROR.MUST_BE_IN_FACTION_FOR_CHAT_TYPE"));
             return;

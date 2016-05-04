@@ -24,7 +24,7 @@ FACTION_HELP:
       - "&e/f map - &7View all claims around your location."
       - "&e/f msg - &7Sends a message to your faction."
       - "&eYou are currently on &fPage 2/4."
-      - "&eTo view other pages, use &9/f help <page#-."
+      - "&eTo view other pages, use &9/f help <page#>."
       - "&6&m-----------------------------------------------------" 
     3:
       - "&6&m-----------------------------------------------------"
@@ -36,49 +36,83 @@ FACTION_HELP:
       -  "&e/f unclaim - &7Unclaims land from your faction."
       - "&e/f uninvite - &7Revoke an invitation to a player."
       - "&eYou are currently on &fPage 3/4."
-      - "&eTo view other pages, use &9/f help <page#-."
+      - "&eTo view other pages, use &9/f help <page#>."
       - "&6&m-----------------------------------------------------"
     4:
       - "&6&m-----------------------------------------------------"
       - "&9Faction Help &e(Page 4/4)"
       - "&e/f withdraw - &7Withdraws money from the faction balance."
       - "&eYou are currently on &fPage 4/4."
-      - "&eTo view other pages, use &9/f help <page#-."
+      - "&eTo view other pages, use &9/f help <page#>."
       - "&6&m-----------------------------------------------------"
+FACTION_SHOW:
+  PLAYER_FACTION:
+    SETTINGS:
+      HOME_PLACEHOLDER: "None" #if home not set
+      OFFLINE_COLOR: "GRAY"
+      ONLINE_COLOR: "GREEN"
+      SPLIT_NAMES:
+        ENABLED: TRUE
+        FORMAT: "&7,"
+      SHOW_KILLS:
+        ENABLED: TRUE
+        FORMAT: "&e[&a%KILLS%&e]"
+      DTR_SYMBOL:
+        FROZEN: "o"
+        REGENERATING: "^"
+        FULL: "<"
+    MESSAGE:
+      - "&7&m-----------------------------------------------------"
+      - "&9%FACTION% &7[%ONLINE_COUNT%/%MAX_COUNT%] &3- &eHome:&f %HOME%"
+      - "&eLeader: %LEADER%"
+      - "&eOfficers: %OFFICERS%"
+      - "&eMembers: %MEMBERS%"
+      - "&eBalance: &9%BALANCE%"
+      - "&eDeaths until raidable: &a%DTR%%DTR_SYMBOL%"
+      - "&eTime until regen: &3%REGEN_TIME%"
+      - "&eAnnouncement: &d%ANNOUNCEMENT%"
+      - "&7&m-----------------------------------------------------"
 ANNOUNCEMENTS:
   FACTION:
     PLAYER_INVITED: "&6%PLAYER%&e has invited &6%INVITED_PLAYER%&e to the faction!"
-    PLAYER_UNINVITED: "&6%PLAYER%&e has cancelled &6%INVITED_PLAYER%&e's invite to the faction!"
+    PLAYER_UNINVITED: "&6%PLAYER%&e has cancelled &6%UNINVITED_PLAYER%&e's invititation to the faction!"
     PLAYER_JOINED: "&6%PLAYER%&e has joined your faction!"
+    PLAYER_LEFT: "&6%PLAYER%&e has left your faction!"
     PLAYER_PROMOTED: "&6%PLAYER%&e has been promoted to an officer by &6%LEADER%&e!"
-    PLAYER_PROMOTED: "&6%PLAYER%&e has been demoted to a member by &6%LEADER%&e!"
+    PLAYER_DEMOTED: "&6%PLAYER%&e has been demoted to a member by &6%LEADER%&e!"
     PLAYER_TRANSFER_LEADERSHIP: "&6%PLAYER%&e has been made leader by &6%LEADER%&e!"
+    PLAYER_SET_HOME: "&3%PLAYER% has updated the faction home location."
     PLAYER_FACTION_CHAT: "&3(Team) %PLAYER%:&e %MESSAGE%"
     PLAYER_ALLY_CHAT: "&9(Ally) %PLAYER%:&e %MESSAGE%"
-  FACTION_CREATED: "&6%PLAYER% &ehas created a new faction named &6%NAME%&e!"
-  FACTION_DISBANDED: "&6%PLAYER% &ehas disbanded &6%NAME%&e!"
-  FACTION_RENAMED: "&6%PLAYER% &ehas renamed &6%OLD_NAME%&e to &6%NEW_NAME%&e!"
-  FACTION_HOME_SET: "&3%PLAYER% has updated the faction home location."
+    PLAYER_SET_ANNOUNCEMENT: "&d%PLAYER%&e changed the faction announcement to &d%MESSAGE%&e"
+  FACTION_CREATED: "&eFaction &9%NAME%&e has been &acreated&e by &f%PLAYER%"
+  FACTION_DISBANDED: "&eFaction &9%NAME%&e has been &cdisbanded&e by &f%PLAYER%"
+  FACTION_RENAMED: "&eFaction &9%OLD_NAME%&e has been &arenamed&e to &9%NEW_NAME%&e by &f%PLAYER%"
 TOO_FEW_ARGS:
-  CREATE: "&cToo few arguments. &eUse like this: &b/f create &3<faction tag-"
+  CREATE: "&cToo few arguments. &eUse like this: &b/f create &3<faction tag>"
   INVITE: "&cToo few arguments. &eUse like this: &b/f invite &3<player>"
   JOIN: "&cToo few arguments. &eUse like this: &b/f join &3<player/faction-"
-  RENAME: "&cToo few arguments. &eUse like this: &b/f tag &3<new faction tag-"
+  RENAME: "&cToo few arguments. &eUse like this: &b/f tag &3<new faction tag>"
   PROMOTE: "&cToo few arguments. &eUse like this: &b/f promote &3<player>"
   DEMOTE: "&cToo few arguments. &eUse like this: &b/f demote &3<player>"
   LEADER: "&cToo few arguments. &eUse like this: &b/f leader &3<playe>"
   UNINVITE: "&cToo few arguments. &eUse like this: &b/f uninvite &3<player>"
   MESSAGE: "&cToo few arguments. &eUse like this: &b/f msg &3<message>"
+  ANNOUNCEMENT: "&cToo few arguments. &eUse like this: &b/f announcement &3<message>"
 FACTION_OTHER:
   INVITED_TO_JOIN: "&6You&e have been invited to join &6%FACTION%&e. &7(Click to join)"
   JOINED: "&eYou joined &6%FACTION%&e."
+  LEFT: "&eYou left &6%FACTION%&e."
   CHAT_CHANGED:
     PUBLIC: "&3You are now in public chat."
     FACTION: "&3You are now in faction chat."
     ALLY: "&3You are now in alliance chat."
 ERROR:
+  NO_FACTIONS_FOUND: "&cNo factions found with player or name %NAME%."
+  CANT_LEAVE_WHEN_LEADER: "&cYou cannot leave as leader!"
   MUST_BE_IN_FACTION_FOR_CHAT_TYPE: "&cYou must be in a faction to use this chat mode!"
   ALREADY_LEADER: "&cYou're already the leader!"
+  PLAYER_ALREADY_LEADER: "&c%PLAYER% is already leader of the faction!"
   NOT_OFFICER: "&c%PLAYER% is not an officer!"
   ALREADY_OFFICER: "&c%PLAYER% is already an officer!"
   NOT_IN_YOUR_FACTION: "&3%PLAYER% is not in your faction!"

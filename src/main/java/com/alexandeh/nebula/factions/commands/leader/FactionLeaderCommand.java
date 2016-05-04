@@ -17,7 +17,7 @@ import java.util.UUID;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionLeaderCommand extends FactionCommand {
-    @Command(name = "f.promote", aliases = {"faction.promote", "factions.promote", "f.mod", "factions.mod", "faction.mod", "f.officer", "factions.officer", "faction.officer", "faction.captain", "f.captain", "faction.captain"})
+    @Command(name = "f.leader", aliases = {"faction.leader", "factions.leader", "f.owner", "factions.owner", "faction.owner", "f.ownership", "factions.ownership", "faction.ownership"})
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
@@ -68,12 +68,17 @@ public class FactionLeaderCommand extends FactionCommand {
             return;
         }
 
+        if (uuid.equals(playerFaction.getLeader()) && !uuid.equals(player.getUniqueId())) {
+            player.sendMessage(langConfig.getString("ERROR.PLAYER_ALREADY_LEADER").replace("%PLAYER%", name));
+            return;
+        }
+
         playerFaction.getMembers().remove(uuid);
         playerFaction.getOfficers().remove(uuid);
 
         playerFaction.getOfficers().add(player.getUniqueId());
         playerFaction.setLeader(uuid);
 
-        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_TRANSFER_LEADERSHIP").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
+        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_TRANSFER_LEADERSHIP").replace("%PLAYER%", name).replace("%LEADER%", player.getName()));
     }
 }

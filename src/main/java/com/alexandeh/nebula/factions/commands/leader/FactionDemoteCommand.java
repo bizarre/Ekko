@@ -77,6 +77,6 @@ public class FactionDemoteCommand extends FactionCommand {
         playerFaction.getOfficers().remove(uuid);
         playerFaction.getMembers().add(uuid);
 
-        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_DEMOTED").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
+        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_DEMOTED").replace("%PLAYER%", name).replace("%LEADER%", player.getName()));
     }
 }

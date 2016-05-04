@@ -127,7 +127,7 @@ public class FactionChatCommand extends FactionCommand implements Listener {
             if (inFactionChat) {
                 playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_FACTION_CHAT").replace("%PLAYER%", player.getName()).replace("%MESSAGE%", event.getMessage()).replace("%FACTION%", playerFaction.getName()));
             } else {
-                //TODO Send message to allies
+                //TODO: Send message to allies
                 playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_ALLY_CHAT").replace("%PLAYER%", player.getName()).replace("%MESSAGE%", event.getMessage()).replace("%FACTION%", playerFaction.getName()));
             }
         }

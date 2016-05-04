@@ -44,20 +44,31 @@ import java.util.*;
 public class PlayerFaction extends Faction {
 
     private UUID leader;
-    private List<UUID> officers, members;
+    private Set<UUID> officers, members;
+    private Set<PlayerFaction> allies;
     private BigDecimal deathsTillRaidable;
     private String announcement;
     private int[] freezeInformation;
     private Map<UUID, UUID> invitedPlayers;
+    private double balance;
 
     public PlayerFaction(String name, UUID leader, UUID uuid) {
         super(name, uuid);
 
         this.leader = leader;
 
-        officers = new ArrayList<>();
-        members = new ArrayList<>();
+        officers = new HashSet<>();
+        members = new HashSet<>();
         invitedPlayers = new HashMap<>();
+        deathsTillRaidable = getMaxDeathsTillRaidable();
+    }
+
+    public boolean isFrozen() {
+        return freezeInformation != null;
+    }
+
+    public BigDecimal getMaxDeathsTillRaidable() {
+        return BigDecimal.valueOf(mainConfig.getDouble("FACTION_DTR.STARTING_DTR")).add(BigDecimal.valueOf(mainConfig.getDouble("FACTION_DTR.DTR_PER_PLAYER") * getAllPlayerUuids().size()));
     }
 
     public List<UUID> getAllPlayerUuids() {
@@ -71,12 +82,20 @@ public class PlayerFaction extends Faction {
     }
 
     public void sendMessage(String message) {
+        for (Player player : getOnlinePlayers()) {
+            player.sendMessage(message);
+        }
+    }
+
+    public Set<Player> getOnlinePlayers() {
+        Set<Player> toReturn = new HashSet<>();
         for (UUID uuid : getAllPlayerUuids()) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                player.sendMessage(message);
+                toReturn.add(player);
             }
         }
+        return toReturn;
     }
 
     public static PlayerFaction getByPlayer(Player player) {

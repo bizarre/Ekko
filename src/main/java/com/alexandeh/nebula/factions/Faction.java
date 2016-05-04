@@ -1,5 +1,9 @@
 package com.alexandeh.nebula.factions;
 
+import com.alexandeh.nebula.Nebula;
+import com.alexandeh.nebula.factions.type.PlayerFaction;
+import com.alexandeh.nebula.files.ConfigFile;
+import com.alexandeh.nebula.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,6 +44,9 @@ import java.util.UUID;
 public class Faction {
 
     private static Set<Faction> factions = new HashSet<>();
+    private Nebula main = Nebula.getInstance();
+
+    public ConfigFile mainConfig = main.getMainConfig();
 
     @Setter
     private String name, home;
@@ -54,9 +61,9 @@ public class Faction {
             this.uuid = UUID.randomUUID();
         /*
         "Only after generating 1 billion UUIDs every second for the next 100 years, the probability of creating just one duplicate would be about 50%." - Wikipedia
-        while (getByUuid(uuid) != null) {
-            uuid = UUID.randomUUID();
-        }*/
+          while (getByUuid(uuid) != null) {
+              uuid = UUID.randomUUID();
+          }*/
         }
         factions.add(this);
     }
@@ -78,6 +85,31 @@ public class Faction {
             }
         }
         return null;
+    }
+
+    public static Set<Faction> getAllByString(String string) {
+        Set<Faction> toReturn = new HashSet<>();
+        for (Faction faction : factions) {
+            if (!(toReturn.contains(faction))) {
+
+                if (faction.getName().equalsIgnoreCase(string)) {
+                    toReturn.add(faction);
+                }
+
+                if (faction instanceof PlayerFaction) {
+                    PlayerFaction playerFaction = (PlayerFaction) faction;
+
+                    for (UUID uuid : playerFaction.getAllPlayerUuids()) {
+                        SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(uuid);
+                        if (offlinePlayer != null && offlinePlayer.getName().equalsIgnoreCase(string)) {
+                            toReturn.add(faction);
+                        }
+                    }
+                }
+
+            }
+        }
+        return toReturn;
     }
 
     public static Set<Faction> getFactions() {

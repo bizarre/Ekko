@@ -70,13 +70,13 @@ public class FactionPromoteCommand extends FactionCommand {
         }
 
         if (playerFaction.getOfficers().contains(uuid)) {
-            player.sendMessage(langConfig.getString("ERROR.ALREADY_OFFICER"));
+            player.sendMessage(langConfig.getString("ERROR.ALREADY_OFFICER").replace("%PLAYER%", name));
             return;
         }
 
         playerFaction.getMembers().remove(uuid);
         playerFaction.getOfficers().add(uuid);
 
-        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_PROMOTED").replace("%PLAYER%", name).replace("%%LEADER%", player.getName()));
+        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_PROMOTED").replace("%PLAYER%", name).replace("%LEADER%", player.getName()));
     }
 }

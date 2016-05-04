@@ -33,15 +33,13 @@ public class FactionJoinCommand extends FactionCommand {
 
         String factionName = command.getArgs(0);
         Faction faction = Faction.getByName(factionName);
-        PlayerFaction playerFaction;
+        PlayerFaction playerFaction = null;
 
-        if (faction == null || !(faction instanceof PlayerFaction)) {
-            return;
+        if (faction instanceof PlayerFaction) {
+            playerFaction = (PlayerFaction) faction;
         }
 
-        playerFaction = (PlayerFaction) faction;
-
-        if (!(playerFaction.getInvitedPlayers().containsKey(player.getUniqueId()))) {
+        if (faction == null || (!(faction instanceof PlayerFaction) || (!(playerFaction.getInvitedPlayers().containsKey(player.getUniqueId()))))) {
             playerFaction = PlayerFaction.getByPlayerName(factionName);
 
             if (playerFaction == null || !(playerFaction.getInvitedPlayers().containsKey(player.getUniqueId()))) {

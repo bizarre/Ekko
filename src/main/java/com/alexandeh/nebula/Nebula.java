@@ -5,10 +5,7 @@ import com.alexandeh.nebula.factions.commands.leader.FactionDemoteCommand;
 import com.alexandeh.nebula.factions.commands.leader.FactionDisbandCommand;
 import com.alexandeh.nebula.factions.commands.leader.FactionLeaderCommand;
 import com.alexandeh.nebula.factions.commands.leader.FactionPromoteCommand;
-import com.alexandeh.nebula.factions.commands.officer.FactionInviteCommand;
-import com.alexandeh.nebula.factions.commands.officer.FactionRenameCommand;
-import com.alexandeh.nebula.factions.commands.officer.FactionSetHomeCommand;
-import com.alexandeh.nebula.factions.commands.officer.FactionUninviteCommand;
+import com.alexandeh.nebula.factions.commands.officer.*;
 import com.alexandeh.nebula.files.ConfigFile;
 import com.alexandeh.nebula.profiles.ProfileListeners;
 import com.alexandeh.nebula.utils.command.CommandFramework;
@@ -93,6 +90,9 @@ public class Nebula extends JavaPlugin {
         new FactionChatCommand();
         new FactionSetHomeCommand();
         new FactionMessageCommand();
+        new FactionAnnouncementCommand();
+        new FactionLeaveCommand();
+        new FactionShowCommand();
     }
 
     private void registerListeners() {
