@@ -46,6 +46,7 @@ public class PlayerFaction extends Faction {
     private UUID leader;
     private Set<UUID> officers, members;
     private Set<PlayerFaction> allies;
+    private Set<UUID> requestedAllies;
     private BigDecimal deathsTillRaidable;
     private String announcement;
     private int[] freezeInformation;
@@ -61,6 +62,8 @@ public class PlayerFaction extends Faction {
         members = new HashSet<>();
         invitedPlayers = new HashMap<>();
         deathsTillRaidable = getMaxDeathsTillRaidable();
+        requestedAllies = new HashSet<>();
+        allies = new HashSet<>();
     }
 
     public boolean isFrozen() {

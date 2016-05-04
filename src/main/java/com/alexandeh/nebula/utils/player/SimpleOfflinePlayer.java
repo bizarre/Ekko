@@ -70,7 +70,7 @@ public class SimpleOfflinePlayer implements Serializable {
 
     public static SimpleOfflinePlayer getByUuid(UUID uuid) {
         for (SimpleOfflinePlayer offlinePlayer : getOfflinePlayers()) {
-            if (offlinePlayer.getUuid().equals(uuid)) {
+            if (offlinePlayer.getName().equals(uuid)) {
                 return offlinePlayer;
             }
         }

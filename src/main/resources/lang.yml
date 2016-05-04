@@ -88,10 +88,13 @@ ANNOUNCEMENTS:
     PLAYER_FACTION_CHAT: "&3(Team) %PLAYER%:&e %MESSAGE%"
     PLAYER_ALLY_CHAT: "&9(Ally) %PLAYER%:&e %MESSAGE%"
     PLAYER_SET_ANNOUNCEMENT: "&d%PLAYER%&e changed the faction announcement to &d%MESSAGE%"
-    PLAYER_KICKED: "&3%PLAYER%&e has kicked&9 %KICKED_PLAYER%&e from the faction"
+    PLAYER_KICKED: "&ePlayer &a%PLAYER%&e has kicked &9%KICKED_PLAYER%&e from the faction"
+    PLAYER_SEND_ALLY_REQUEST: "&ePlayer &a%PLAYER%&e has requested to ally &9%FACTION%&e."
   FACTION_CREATED: "&eFaction &9%NAME%&e has been &acreated&e by &f%PLAYER%"
   FACTION_DISBANDED: "&eFaction &9%NAME%&e has been &cdisbanded&e by &f%PLAYER%"
   FACTION_RENAMED: "&eFaction &9%OLD_NAME%&e has been &arenamed&e to &9%NEW_NAME%&e by &f%PLAYER%"
+  FACTION_RECEIVE_ALLY_REQUEST: "&eFaction &9%FACTION%&e has sent you an ally request!"
+  FACTION_ALLIED: "&eYour faction is now &dallied&e with &9%FACTION%&e."
 TOO_FEW_ARGS:
   CREATE: "&cToo few arguments. &eUse like this: &b/f create &3<faction tag>"
   INVITE: "&cToo few arguments. &eUse like this: &b/f invite &3<player>"
@@ -104,6 +107,7 @@ TOO_FEW_ARGS:
   MESSAGE: "&cToo few arguments. &eUse like this: &b/f msg &3<message>"
   ANNOUNCEMENT: "&cToo few arguments. &eUse like this: &b/f announcement &3<message>"
   KICK: "&cToo few arguments. &eUse like this: &b/f kick &3<player>"
+  ALLY: "&cToo few arguments. &eUse like this: &b/f ally &3<faction>"
 FACTION_OTHER:
   INVITED_TO_JOIN: "&eYou&e have been invited to join &9%FACTION%&e. &7(Click to join)"
   JOINED: "&eYou joined &9%FACTION%&e."
@@ -118,6 +122,10 @@ FACTION_OTHER:
     FACTION: "&3You are now in faction chat."
     ALLY: "&3You are now in alliance chat."
 ERROR:
+  MAX_ALLIES: "&c%FACTION% has reached the ally limit!"
+  ALREADY_HAVE_RELATION: "&cYour faction already has this relationship with %NAME%."
+  ALREADY_REQUESTED: "&cYour faction has already requested to ally %NAME%."
+  CANT_ALLY_YOURSELF: "&cYou cannot ally your own faction!"
   CANT_KICK_OTHER_OFFICER: "&cYou can't kick another officer!"
   CANT_KICK_LEADER: "&cYou can't kick the leader!"
   KICK_YOURSELF: "&cYou can't kick yourself!"

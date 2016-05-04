@@ -163,6 +163,17 @@ public class CommandFramework implements CommandExecutor {
 		Bukkit.getServer().getHelpMap().addTopic(topic);
 	}
 
+	public void unregisterCommands(Object obj) { //Wiil have to test this when i get home...
+		for (Method m : obj.getClass().getMethods()) {
+			if (m.getAnnotation(Command.class) != null) {
+				Command command = m.getAnnotation(Command.class);
+				commandMap.remove(command.name().toLowerCase());
+				commandMap.remove(this.plugin.getName() + ":" + command.name().toLowerCase());
+				map.getCommand(command.name().toLowerCase()).unregister(map);
+			}
+		}
+	}
+
 	public void registerCommand(Command command, String label, Method m, Object obj) {
 		commandMap.put(label.toLowerCase(), new AbstractMap.SimpleEntry<Method, Object>(m, obj));
 		commandMap.put(this.plugin.getName() + ':' + label.toLowerCase(), new AbstractMap.SimpleEntry<Method, Object>(m, obj));
