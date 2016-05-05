@@ -146,10 +146,6 @@ public class FactionShowCommand extends FactionCommand {
                     }
 
                     string = string.replace("%OFFICERS%", officerString);
-
-                    if (splitNamesEnabled) {
-                        string = string.substring(0, string.lastIndexOf(splitNamesFormat));
-                    }
                 }
 
                 if (string.contains("%MEMBERS%")) {
@@ -183,10 +179,25 @@ public class FactionShowCommand extends FactionCommand {
                     }
 
                     string = string.replace("%MEMBERS%", memberString);
+                }
 
-                    if (splitNamesEnabled) {
-                        string = string.substring(0, string.lastIndexOf(splitNamesFormat));
+                if (string.contains("%ALLIES%")) {
+
+                    if (playerFaction.getAllies().isEmpty()) {
+                        continue;
                     }
+
+                    ChatColor allyColor = ChatColor.valueOf(mainConfig.getString("TAB_LIST.ALLY_COLOR"));
+                    String allies = "";
+                    for (PlayerFaction ally : playerFaction.getAllies()) {
+                        allies = allies + allyColor + ally.getName();
+
+                        if (splitNamesEnabled) {
+                            allies = allies + splitNamesFormat;
+                        }
+                    }
+
+                    string = string.replace("%ALLIES%", allies);
                 }
 
                 string = string.replace("%DTR%", playerFaction.getDeathsTillRaidable() + "");
@@ -207,6 +218,10 @@ public class FactionShowCommand extends FactionCommand {
                         continue;
                     }
                     //TODO: make this do something..
+                }
+
+                if (splitNamesEnabled && string.contains(splitNamesFormat)) {
+                    string = string.substring(0, string.lastIndexOf(splitNamesFormat));
                 }
 
                 toSend.add(string);

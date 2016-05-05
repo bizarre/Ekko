@@ -7,11 +7,16 @@ import com.alexandeh.nebula.factions.commands.leader.FactionLeaderCommand;
 import com.alexandeh.nebula.factions.commands.leader.FactionPromoteCommand;
 import com.alexandeh.nebula.factions.commands.officer.*;
 import com.alexandeh.nebula.files.ConfigFile;
+import com.alexandeh.nebula.listeners.ChatListeners;
+import com.alexandeh.nebula.listeners.ScoreboardListeners;
+import com.alexandeh.nebula.profiles.Profile;
 import com.alexandeh.nebula.profiles.ProfileListeners;
 import com.alexandeh.nebula.utils.command.CommandFramework;
+import com.alexandeh.nebula.utils.player.PlayerUtility;
 import com.alexandeh.nebula.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -61,13 +66,20 @@ public class Nebula extends JavaPlugin {
         langConfig = new ConfigFile(this, "lang");
 
         framework = new CommandFramework(this);
+
         SimpleOfflinePlayer.load(this);
+        Profile.sendTabUpdate();
 
         registerListeners();
         registerCommands();
     }
 
     public void onDisable() {
+
+        for (Player player : PlayerUtility.getOnlinePlayers()) {
+            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        }
+
         try {
             SimpleOfflinePlayer.save(this);
         } catch (IOException e) {
@@ -95,10 +107,14 @@ public class Nebula extends JavaPlugin {
         new FactionShowCommand();
         new FactionKickCommand();
         new FactionInvitesCommand();
+        new FactionAllyCommand();
+        new FactionEnemyCommand();
     }
 
     private void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new ProfileListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new ScoreboardListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListeners(), this);
     }
 
     public static Nebula getInstance() {

@@ -48,6 +48,11 @@ public class FactionJoinCommand extends FactionCommand {
             }
         }
 
+        if (playerFaction.getAllPlayerUuids().size() >= mainConfig.getInt("FACTION_GENERAL.MAX_PLAYERS")) {
+            player.sendMessage(langConfig.getString("ERROR.MAX_PLAYERS").replace("%FACTION%", playerFaction.getName()));
+            return;
+        }
+
         player.sendMessage(langConfig.getString("FACTION_OTHER.JOINED").replace("%FACTION%", playerFaction.getName()));
         playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_JOINED").replace("%PLAYER%", player.getName()));
 

@@ -38,7 +38,6 @@ public class FactionLeaveCommand extends FactionCommand {
         playerFaction.getOfficers().remove(player.getUniqueId());
         profile.setFaction(null);
 
-
         playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_LEFT").replace("%PLAYER%", player.getName()));
 
         Bukkit.getPluginManager().callEvent(new PlayerLeaveFactionEvent(player, playerFaction));

@@ -43,9 +43,13 @@ public class FactionDisbandCommand extends FactionCommand {
             }
         }
 
+        Bukkit.getPluginManager().callEvent(new PlayerDisbandFactionEvent(player, playerFaction));
+
         Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION_DISBANDED").replace("%PLAYER%", player.getName()).replace("%NAME%", playerFaction.getName()));
         Faction.getFactions().remove(playerFaction);
 
-        Bukkit.getPluginManager().callEvent(new PlayerDisbandFactionEvent(player, playerFaction));
+        for (PlayerFaction ally : playerFaction.getAllies()) {
+            ally.getAllies().remove(playerFaction);
+        }
     }
 }

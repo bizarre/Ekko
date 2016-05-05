@@ -163,7 +163,7 @@ public class CommandFramework implements CommandExecutor {
 		Bukkit.getServer().getHelpMap().addTopic(topic);
 	}
 
-	public void unregisterCommands(Object obj) { //Wiil have to test this when i get home...
+	public void unregisterCommands(Object obj) {
 		for (Method m : obj.getClass().getMethods()) {
 			if (m.getAnnotation(Command.class) != null) {
 				Command command = m.getAnnotation(Command.class);

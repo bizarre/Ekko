@@ -43,10 +43,6 @@ public class SimpleOfflinePlayer implements Serializable {
         if (!(offlinePlayers.isEmpty())) {
             File file = new File(main.getDataFolder(), "offlineplayers.json");
 
-            if (!(file.exists())) {
-                file.createNewFile();
-            }
-
             Writer writer = new FileWriter(file);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(offlinePlayers);
@@ -56,21 +52,31 @@ public class SimpleOfflinePlayer implements Serializable {
     }
     public static void load(JavaPlugin main) {
         File file = new File(main.getDataFolder(), "offlineplayers.json");
+
         if (file.exists()) {
             Gson gson = new Gson();
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 Type type = new TypeToken<Set<SimpleOfflinePlayer>>(){}.getType();
-                offlinePlayers = gson.fromJson(reader, type);
+                Set<SimpleOfflinePlayer> set = gson.fromJson(reader, type);
+                if (set != null) {
+                    offlinePlayers.addAll(set);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
+
+         for (Player player : PlayerUtility.getOnlinePlayers()) {
+             if (getByUuid(player.getUniqueId()) == null) {
+                 new SimpleOfflinePlayer(player);
+             }
+         }
     }
 
     public static SimpleOfflinePlayer getByUuid(UUID uuid) {
         for (SimpleOfflinePlayer offlinePlayer : getOfflinePlayers()) {
-            if (offlinePlayer.getName().equals(uuid)) {
+            if (offlinePlayer.getUuid().equals(uuid)) {
                 return offlinePlayer;
             }
         }

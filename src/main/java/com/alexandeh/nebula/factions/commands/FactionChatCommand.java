@@ -114,6 +114,23 @@ public class FactionChatCommand extends FactionCommand implements Listener {
         Profile profile = Profile.getByUuid(player.getUniqueId());
         PlayerFaction playerFaction = profile.getFaction();
 
+        if (event.getMessage().startsWith("!") && event.getMessage().length() > 1) {
+            event.setMessage(event.getMessage().substring(1, event.getMessage().length()));
+            return;
+        }
+
+        if (event.getMessage().startsWith("@") && event.getMessage().length() > 1) {
+            event.setCancelled(true);
+
+            if (playerFaction == null) {
+                player.sendMessage(langConfig.getString("ERROR.MUST_BE_IN_FACTION_FOR_CHAT_TYPE"));
+                return;
+            }
+
+            playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_FACTION_CHAT").replace("%PLAYER%", player.getName()).replace("%MESSAGE%", event.getMessage().substring(1, event.getMessage().length())).replace("%FACTION%", playerFaction.getName()));
+            return;
+        }
+
         boolean inFactionChat = profile.getChatType() == ProfileChatType.FACTION;
 
         if (inFactionChat || profile.getChatType() == ProfileChatType.ALLY) {
@@ -127,8 +144,11 @@ public class FactionChatCommand extends FactionCommand implements Listener {
             if (inFactionChat) {
                 playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_FACTION_CHAT").replace("%PLAYER%", player.getName()).replace("%MESSAGE%", event.getMessage()).replace("%FACTION%", playerFaction.getName()));
             } else {
-                //TODO: Send message to allies
-                playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_ALLY_CHAT").replace("%PLAYER%", player.getName()).replace("%MESSAGE%", event.getMessage()).replace("%FACTION%", playerFaction.getName()));
+                String message = langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_ALLY_CHAT").replace("%PLAYER%", player.getName()).replace("%MESSAGE%", event.getMessage()).replace("%FACTION%", playerFaction.getName());
+                playerFaction.sendMessage(message);
+                for (PlayerFaction allyFaction : playerFaction.getAllies()) {
+                    allyFaction.sendMessage(message);
+                }
             }
         }
     }

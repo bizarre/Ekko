@@ -71,7 +71,7 @@ public class PlayerFaction extends Faction {
     }
 
     public BigDecimal getMaxDeathsTillRaidable() {
-        return BigDecimal.valueOf(mainConfig.getDouble("FACTION_DTR.STARTING_DTR") + mainConfig.getDouble("FACTION_DTR.DTR_PER_PLAYER") * getAllPlayerUuids().size());
+        return BigDecimal.valueOf(mainConfig.getDouble("FACTION_GENERAL.STARTING_DTR") + mainConfig.getDouble("FACTION_GENERAL.DTR_PER_PLAYER") * getAllPlayerUuids().size());
     }
 
     public List<UUID> getAllPlayerUuids() {

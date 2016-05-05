@@ -16,7 +16,11 @@ public class ProfileListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        Profile.sendTabUpdate();
+
         SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(player.getUniqueId());
+
         if (offlinePlayer == null) {
             new SimpleOfflinePlayer(player);
         } else {
