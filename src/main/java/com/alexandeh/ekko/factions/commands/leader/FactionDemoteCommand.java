@@ -17,7 +17,7 @@ import java.util.UUID;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionDemoteCommand extends FactionCommand {
-    @Command(name = "f.demote", aliases = {"faction.demote", "factions.demote", "f.mod", "factions.mod", "faction.mod", "f.officer", "factions.officer", "faction.officer", "faction.captain", "f.captain", "faction.captain"})
+    @Command(name = "f.demote", aliases = {"faction.demote", "factions.demote", "f.unmod", "factions.unmod", "faction.unmod", "f.unofficer", "factions.unofficer", "faction.unofficer", "faction.uncaptain", "f.uncaptain", "faction.uncaptain"}, inFactionOnly = true, isLeaderOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
@@ -27,18 +27,7 @@ public class FactionDemoteCommand extends FactionCommand {
         }
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
-
-        if (profile.getFaction() == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
-
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_LEADER"));
-            return;
-        }
 
         if (command.getArgs(0).equalsIgnoreCase(player.getName()) && player.getUniqueId().equals(playerFaction.getLeader())) {
             player.sendMessage(langConfig.getString("ERROR.DEMOTE_YOURSELF"));

@@ -69,4 +69,10 @@ public @interface Command {
 	 * @return
 	 */
 	public boolean inGameOnly() default true;
+
+	public boolean inFactionOnly() default false;
+
+	public boolean isLeaderOnly() default false;
+
+	public boolean isOfficerOnly() default false;
 }

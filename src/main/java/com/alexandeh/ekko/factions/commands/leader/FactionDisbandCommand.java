@@ -23,18 +23,36 @@ public class FactionDisbandCommand extends FactionCommand {
         Player player = command.getPlayer();
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
+        PlayerFaction playerFaction;
 
-        if (profile.getFaction() == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
+        if (command.getArgs().length >= 1) {
+            String name = command.getArgs(0);
+            Faction faction = PlayerFaction.getAnyByString(name);
+            if (faction != null) {
+                if (faction instanceof PlayerFaction) {
+                    playerFaction = (PlayerFaction) faction;
+                } else {
+                    //TODO: Disband system faction..
+                    return;
+                }
+            } else {
+                player.sendMessage(langConfig.getString("ERROR.NO_FACTIONS_FOUND").replace("%NAME%", name));
+                return;
+            }
+        } else {
+            playerFaction = profile.getFaction();
+
+            if (playerFaction == null) {
+                player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
+                return;
+            }
+
+            if (!playerFaction.getLeader().equals(player.getUniqueId())) {
+                player.sendMessage(langConfig.getString("ERROR.NOT_LEADER"));
+                return;
+            }
         }
 
-        PlayerFaction playerFaction = profile.getFaction();
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_LEADER"));
-            return;
-        }
 
         for (UUID member : playerFaction.getAllPlayerUuids()) {
             Profile memberProfile = Profile.getByUuid(member);

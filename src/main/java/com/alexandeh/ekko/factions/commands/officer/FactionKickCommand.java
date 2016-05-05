@@ -17,7 +17,7 @@ import java.util.UUID;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionKickCommand extends FactionCommand {
-    @Command(name = "f.kick", aliases = {"faction.kick", "factions.kick"})
+    @Command(name = "f.kick", aliases = {"faction.kick", "factions.kick"}, inFactionOnly = true, isOfficerOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
@@ -27,18 +27,7 @@ public class FactionKickCommand extends FactionCommand {
         }
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
-
-        if (profile.getFaction() == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
-
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
-            return;
-        }
 
         if (command.getArgs(0).equalsIgnoreCase(player.getName())) {
             player.sendMessage(langConfig.getString("ERROR.KICK_YOURSELF"));

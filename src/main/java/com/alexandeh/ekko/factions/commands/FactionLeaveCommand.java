@@ -14,17 +14,12 @@ import org.bukkit.entity.Player;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionLeaveCommand extends FactionCommand {
-    @Command(name = "f.leave", aliases = {"faction.leave", "factions.leave", "f.quit", "factions.quit", "faction.quit"})
+    @Command(name = "f.leave", aliases = {"faction.leave", "factions.leave", "f.quit", "factions.quit", "faction.quit"}, inFactionOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         Profile profile = Profile.getByUuid(player.getUniqueId());
 
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (playerFaction == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
 
         if (playerFaction.getLeader().equals(player.getUniqueId())) {
             player.sendMessage(langConfig.getString("ERROR.CANT_LEAVE_WHEN_LEADER"));

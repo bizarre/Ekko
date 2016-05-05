@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionAnnouncementCommand extends FactionCommand {
-    @Command(name = "f.announcement", aliases = {"faction.announcement", "factions.announcement", "f.anouncement", "faction.anouncement", "factions.anouncement"})
+    @Command(name = "f.announcement", aliases = {"faction.announcement", "factions.announcement", "f.anouncement", "faction.anouncement", "factions.anouncement"}, inFactionOnly = true, isOfficerOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();
@@ -25,16 +25,6 @@ public class FactionAnnouncementCommand extends FactionCommand {
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (playerFaction == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
-            return;
-        }
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < command.getArgs().length; i++) {

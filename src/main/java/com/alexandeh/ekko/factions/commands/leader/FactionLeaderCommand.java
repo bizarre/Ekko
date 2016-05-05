@@ -17,7 +17,7 @@ import java.util.UUID;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionLeaderCommand extends FactionCommand {
-    @Command(name = "f.leader", aliases = {"faction.leader", "factions.leader", "f.owner", "factions.owner", "faction.owner", "f.ownership", "factions.ownership", "faction.ownership"})
+    @Command(name = "f.leader", aliases = {"faction.leader", "factions.leader", "f.owner", "factions.owner", "faction.owner", "f.ownership", "factions.ownership", "faction.ownership"}, inFactionOnly = true, isLeaderOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
@@ -27,18 +27,7 @@ public class FactionLeaderCommand extends FactionCommand {
         }
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
-
-        if (profile.getFaction() == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
-
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_LEADER"));
-            return;
-        }
 
         UUID uuid;
         String name;

@@ -8,5 +8,5 @@ package com.alexandeh.ekko.profiles;
 public enum ProfileChatType {
     PUBLIC,
     FACTION,
-    ALLY;
+    ALLY
 }

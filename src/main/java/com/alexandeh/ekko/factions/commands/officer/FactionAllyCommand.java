@@ -24,7 +24,7 @@ public class FactionAllyCommand extends FactionCommand {
         }
     }
 
-    @Command(name = "f.ally", aliases = {"faction.ally", "factions.ally", "f.alliance", "factions.alliance", "faction.alliance"})
+    @Command(name = "f.ally", aliases = {"faction.ally", "factions.ally", "f.alliance", "factions.alliance", "faction.alliance"}, inFactionOnly = true, isOfficerOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
@@ -35,16 +35,6 @@ public class FactionAllyCommand extends FactionCommand {
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (playerFaction == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
-            return;
-        }
 
         String factionName = command.getArgs(0);
         Faction faction = Faction.getByName(factionName);

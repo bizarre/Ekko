@@ -202,12 +202,22 @@ public class FactionShowCommand extends FactionCommand {
 
                 string = string.replace("%DTR%", playerFaction.getDeathsTillRaidable() + "");
 
-                string = string.replace("%DTR_SYMBOL%", ""); //TODO: make this work..
+                if (string.contains("%DTR_SYMBOL%")) {
+                    if (playerFaction.getDeathsTillRaidable().equals(playerFaction.getMaxDeathsTillRaidable())) {
+                        string = string.replace("%DTR_SYMBOL%", langConfig.getString(ROOT_SETTINGS + "DTR_SYMBOL.FULL"));
+                    } else {
+                        if (playerFaction.isFrozen()) {
+                            string = string.replace("%DTR_SYMBOL%", langConfig.getString(ROOT_SETTINGS + "DTR_SYMBOL.FROZEN"));
+                        } else {
+                            string = string.replace("%DTR_SYMBOL%", langConfig.getString(ROOT_SETTINGS + "DTR_SYMBOL.REGENERATING"));
+                        }
+                    }
+                }
 
                 string = string.replace("%BALANCE%", playerFaction.getBalance() + "");
 
                 if (string.contains("%ANNOUNCEMENT%")) {
-                    if (playerFaction.getAnnouncement() == null) {
+                    if (playerFaction.getAnnouncement() == null || !playerFaction.getOnlinePlayers().contains(player)) {
                         continue;
                     }
                     string = string.replace("%ANNOUNCEMENT%", playerFaction.getAnnouncement());

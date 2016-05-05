@@ -130,6 +130,19 @@ public class PlayerFaction extends Faction {
         return null;
     }
 
+    public static Faction getAnyByString(String factionName) {
+        Faction faction = Faction.getByName(factionName);
+
+        if (faction == null) {
+            faction = PlayerFaction.getByPlayerName(factionName);
+
+            if (faction == null) {
+                return null;
+            }
+        }
+        return faction;
+    }
+
     public static Set<PlayerFaction> getPlayerFactions() {
         Set<PlayerFaction> toReturn = new HashSet<>();
         for (Faction faction : getFactions()) {

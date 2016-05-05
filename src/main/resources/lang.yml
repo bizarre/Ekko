@@ -5,49 +5,49 @@ FACTION_HELP:
     1:
       - "&6&m-----------------------------------------------------"
       - "&9Faction Help &e(Page 1/4)"
-      - "&e/f accept - &7Accept a join request from an existing faction."
-      - "&e/f chat - &7Toggle faction/ally chat mode on or off."
-      - "&e/f claim - &7Claim land in the Wilderness."
-      - "&e/f create - &7Create a faction."
-      - "&e/f demote - &7Demotes a player to a member."
-      - "&e/f deposit - &7Deposits money to the faction balance."
+      - "&e/f accept - &7Accept a join request from an existing faction." # done
+      - "&e/f chat - &7Toggle faction/ally chat mode on or off." # done
+      - "&e/f claim - &7Claim land in the Wilderness." # not done
+      - "&e/f create - &7Create a faction." # done
+      - "&e/f demote - &7Demotes a player to a member." # done
+      - "&e/f deposit - &7Deposits money to the faction balance." # not done
       - "&eYou are currently on &fPage 1/4."
       - "&eTo view other pages, use &9/f help <page#-"
       - "&6&m-----------------------------------------------------"
     2:
       - "&6&m-----------------------------------------------------"
       - "&9Faction Help &e(Page 2/4)"
-      - "&e/f disband - &7Disband your faction."
-      - "&e/f home - &7Teleport to the faction home."
-      - "&e/f invite - &7Invite a player to the faction."
-      - "&e/f kick - &7Kick a player from the faction."
-      - "&e/f leader - &7Sets the new leader for your faction."
-      - "&e/f leave - &7Leave your current faction."
-      - "&e/f list - &7See a list of all factions."
-      - "&e/f map - &7View all claims around your location."
-      - "&e/f msg - &7Sends a message to your faction."
+      - "&e/f disband - &7Disband your faction." # done
+      - "&e/f home - &7Teleport to the faction home." #not done
+      - "&e/f invite - &7Invite a player to the faction." # done
+      - "&e/f kick - &7Kick a player from the faction." # done
+      - "&e/f leader - &7Sets the new leader for your faction." # done
+      - "&e/f leave - &7Leave your current faction." # done
+      - "&e/f list - &7See a list of all factions." # not done
+      - "&e/f map - &7View all claims around your location." # not done
+      - "&e/f msg - &7Sends a message to your faction." # done
       - "&eYou are currently on &fPage 2/4."
       - "&eTo view other pages, use &9/f help <page#>."
       - "&6&m-----------------------------------------------------" 
     3:
       - "&6&m-----------------------------------------------------"
       - "&9Faction Help &e(Page 3/4)"
-      - "&e/f rename - &7Change the name of your faction."
-      - "&e/f promote - &7Promotes a player to a captain."
-      - "&e/f sethome - &7Sets the faction home location."
-      - "&e/f show - &7Get details about a faction."
-      -  "&e/f unclaim - &7Unclaims land from your faction."
-      - "&e/f uninvite - &7Revoke an invitation to a player."
+      - "&e/f rename - &7Change the name of your faction." # done
+      - "&e/f promote - &7Promotes a player to a captain." # done
+      - "&e/f sethome - &7Sets the faction home location." # semi-done
+      - "&e/f show - &7Get details about a faction." # done?
+      - "&e/f unclaim - &7Unclaims land from your faction." # not done
+      - "&e/f uninvite - &7Revoke an invitation to a player." # done
       - "&eYou are currently on &fPage 3/4."
       - "&eTo view other pages, use &9/f help <page#>."
       - "&6&m-----------------------------------------------------"
     4:
       - "&6&m-----------------------------------------------------"
       - "&9Faction Help &e(Page 4/4)"
-      - "&e/f withdraw - &7Withdraws money from the faction balance."
+      - "&e/f withdraw - &7Withdraws money from the faction balance." # not done
       - "&eYou are currently on &fPage 4/4."
       - "&eTo view other pages, use &9/f help <page#>."
-      - "&6&m-----------------------------------------------------"
+      - "&6&m-----------------------------------------------------" # 14/22 commands done
 FACTION_SHOW:
   PLAYER_FACTION:
     SETTINGS:

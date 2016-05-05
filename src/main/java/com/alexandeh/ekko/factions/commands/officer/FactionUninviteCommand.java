@@ -17,7 +17,7 @@ import java.util.UUID;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionUninviteCommand extends FactionCommand {
-    @Command(name = "f.uninvite", aliases = {"faction.uninvite", "factions.uninvite", "f.uninv", "factions.uninv", "faction.uninv"}) //any other aliases..?
+    @Command(name = "f.uninvite", aliases = {"faction.uninvite", "factions.uninvite", "f.uninv", "factions.uninv", "faction.uninv"}, inFactionOnly = true, isOfficerOnly = true) //any other aliases..?
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
@@ -27,18 +27,7 @@ public class FactionUninviteCommand extends FactionCommand {
         }
 
         Profile profile = Profile.getByUuid(player.getUniqueId());
-
-        if (profile.getFaction() == null) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_IN_FACTION"));
-            return;
-        }
-
         PlayerFaction playerFaction = profile.getFaction();
-
-        if (!(playerFaction.getLeader().equals(player.getUniqueId())) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("ekko.admin")) {
-            player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
-            return;
-        }
 
         UUID uuid;
         String name;
