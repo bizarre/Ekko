@@ -6,7 +6,6 @@ import com.alexandeh.ekko.profiles.Profile;
 import com.alexandeh.ekko.utils.LocationSerialization;
 import com.alexandeh.ekko.utils.command.Command;
 import com.alexandeh.ekko.utils.command.CommandArgs;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -25,6 +24,6 @@ public class FactionSetHomeCommand extends FactionCommand {
 
         playerFaction.setHome(LocationSerialization.serializeLocation(player.getLocation()));
 
-        Bukkit.broadcastMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_SET_HOME").replace("%PLAYER%", player.getName()));
+        playerFaction.sendMessage(langConfig.getString("ANNOUNCEMENTS.FACTION.PLAYER_SET_HOME").replace("%PLAYER%", player.getName()));
     }
 }

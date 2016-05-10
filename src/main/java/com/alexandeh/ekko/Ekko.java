@@ -1,11 +1,14 @@
 package com.alexandeh.ekko;
 
 import com.alexandeh.ekko.factions.commands.*;
+import com.alexandeh.ekko.factions.commands.FactionDepositCommand;
+import com.alexandeh.ekko.factions.commands.officer.FactionWithdrawCommand;
 import com.alexandeh.ekko.factions.commands.leader.FactionDemoteCommand;
 import com.alexandeh.ekko.factions.commands.leader.FactionDisbandCommand;
 import com.alexandeh.ekko.factions.commands.leader.FactionLeaderCommand;
 import com.alexandeh.ekko.factions.commands.leader.FactionPromoteCommand;
 import com.alexandeh.ekko.factions.commands.officer.*;
+import com.alexandeh.ekko.factions.type.PlayerFaction;
 import com.alexandeh.ekko.files.ConfigFile;
 import com.alexandeh.ekko.listeners.ChatListeners;
 import com.alexandeh.ekko.listeners.ScoreboardListeners;
@@ -15,6 +18,7 @@ import com.alexandeh.ekko.utils.command.CommandFramework;
 import com.alexandeh.ekko.utils.player.PlayerUtility;
 import com.alexandeh.ekko.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,6 +62,7 @@ public class Ekko extends JavaPlugin {
     private CommandFramework framework;
     private ConfigFile mainConfig;
     private ConfigFile langConfig;
+    private Economy economy;
 
     public void onEnable() {
         instance = this;
@@ -66,8 +71,10 @@ public class Ekko extends JavaPlugin {
         langConfig = new ConfigFile(this, "lang");
 
         framework = new CommandFramework(this);
+        economy = Bukkit.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
         SimpleOfflinePlayer.load(this);
+        PlayerFaction.runTasks(this);
         Profile.sendTabUpdate();
 
         registerListeners();
@@ -109,6 +116,8 @@ public class Ekko extends JavaPlugin {
         new FactionInvitesCommand();
         new FactionAllyCommand();
         new FactionEnemyCommand();
+        new FactionDepositCommand();
+        new FactionWithdrawCommand();
     }
 
     private void registerListeners() {

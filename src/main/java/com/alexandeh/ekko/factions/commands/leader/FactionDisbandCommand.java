@@ -25,7 +25,7 @@ public class FactionDisbandCommand extends FactionCommand {
         Profile profile = Profile.getByUuid(player.getUniqueId());
         PlayerFaction playerFaction;
 
-        if (command.getArgs().length >= 1) {
+        if (command.getArgs().length >= 1 && player.hasPermission("ekko.admin")) {
             String name = command.getArgs(0);
             Faction faction = PlayerFaction.getAnyByString(name);
             if (faction != null) {
@@ -60,6 +60,8 @@ public class FactionDisbandCommand extends FactionCommand {
                 memberProfile.setFaction(null);
             }
         }
+
+        main.getEconomy().depositPlayer(player, playerFaction.getBalance());
 
         Bukkit.getPluginManager().callEvent(new PlayerDisbandFactionEvent(player, playerFaction));
 

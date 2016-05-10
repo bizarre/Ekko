@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Copyright 2016 Alexander Maxwell
@@ -23,7 +24,7 @@ import java.util.UUID;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionShowCommand extends FactionCommand {
-    @Command(name = "f.show", aliases = {"faction.show", "factions.show", "f.i", "faction.i", "factions.i", "f.info", "faction.info", "factions.info"})
+    @Command(name = "f.show", aliases = {"faction.show", "factions.show", "f.i", "faction.i", "factions.i", "f.info", "faction.info", "factions.info"," f.who", "faction.who", "factions.who"})
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         Profile profile = Profile.getByUuid(player.getUniqueId());
@@ -84,6 +85,8 @@ public class FactionShowCommand extends FactionCommand {
 
                 ChatColor offlineColor = ChatColor.valueOf(langConfig.getString(ROOT_SETTINGS + "OFFLINE_COLOR").toUpperCase());
                 ChatColor onlineColor = ChatColor.valueOf(langConfig.getString(ROOT_SETTINGS + "ONLINE_COLOR").toUpperCase());
+                ChatColor raidableColor =  ChatColor.valueOf(langConfig.getString(ROOT_SETTINGS + "DTR_COLOR.RAIDABLE").toUpperCase());
+                ChatColor notRaidableColor =  ChatColor.valueOf(langConfig.getString(ROOT_SETTINGS + "DTR_COLOR.NOT_RAIDABLE").toUpperCase());
                 String killFormat = langConfig.getString(ROOT_SETTINGS + "SHOW_KILLS.FORMAT");
                 String splitNamesFormat = langConfig.getString(ROOT_SETTINGS + "SPLIT_NAMES.FORMAT");
                 boolean splitNamesEnabled = langConfig.getBoolean(ROOT_SETTINGS + "SPLIT_NAMES.ENABLED");
@@ -200,7 +203,13 @@ public class FactionShowCommand extends FactionCommand {
                     string = string.replace("%ALLIES%", allies);
                 }
 
-                string = string.replace("%DTR%", playerFaction.getDeathsTillRaidable() + "");
+                if (string.contains("%DTR%")) {
+                    if (playerFaction.isRaidable()) {
+                        string = string.replace("%DTR%", raidableColor + "" + playerFaction.getDeathsTillRaidable());
+                    } else {
+                        string = string.replace("%DTR%", notRaidableColor + "" + playerFaction.getDeathsTillRaidable());
+                    }
+                }
 
                 if (string.contains("%DTR_SYMBOL%")) {
                     if (playerFaction.getDeathsTillRaidable().equals(playerFaction.getMaxDeathsTillRaidable())) {
@@ -215,6 +224,7 @@ public class FactionShowCommand extends FactionCommand {
                 }
 
                 string = string.replace("%BALANCE%", playerFaction.getBalance() + "");
+                string = string.replace("%MAX_DTR%", playerFaction.getMaxDeathsTillRaidable() + "");
 
                 if (string.contains("%ANNOUNCEMENT%")) {
                     if (playerFaction.getAnnouncement() == null || !playerFaction.getOnlinePlayers().contains(player)) {
@@ -224,10 +234,45 @@ public class FactionShowCommand extends FactionCommand {
                 }
 
                 if (string.contains("%REGEN_TIME%")) {
+
                     if (!(playerFaction.isFrozen())) {
                         continue;
                     }
-                    //TODO: make this do something..
+
+                    int timeLeft = (int) (playerFaction.getFreezeInformation()[0] + playerFaction.getFreezeInformation()[1] - System.currentTimeMillis() / 1000);
+                    long hours = TimeUnit.SECONDS.toHours(timeLeft);
+                    long minutes = TimeUnit.SECONDS.toMinutes(timeLeft) - (hours * 60);
+                    long seconds = TimeUnit.SECONDS.toSeconds(timeLeft) - ((hours * 60 * 60) + (minutes * 60));
+
+                    String formatted;
+
+                    if (hours == 0 && minutes > 0 && seconds > 0) {
+                        formatted = minutes + " minutes and " + seconds + " seconds";
+                    } else if (hours == 0 && minutes > 0 && seconds == 0) {
+                        formatted = minutes + " minutes";
+                    } else if (hours == 0 && minutes == 0 && seconds > 0) {
+                        formatted = seconds + " seconds";
+                    } else if (hours > 0 && minutes > 0 && seconds == 0) {
+                        formatted = hours + " hours and " + minutes + " minutes";
+                    } else if (hours > 0 && minutes == 0 && seconds > 0) {
+                        formatted = hours + " hours and " + seconds + " seconds";
+                    } else {
+                        formatted = hours + "hours, " + minutes + " minutes and " + seconds + " seconds";
+                    }
+
+                    if (hours == 1) {
+                        formatted = formatted.replace("hours", "hour");
+                    }
+
+                    if (minutes == 1) {
+                        formatted = formatted.replace("minutes", "minute");
+                    }
+
+                    if (seconds == 1) {
+                        formatted = formatted.replace("seconds", "second");
+                    }
+
+                    string = string.replace("%REGEN_TIME%", formatted);
                 }
 
                 if (splitNamesEnabled && string.contains(splitNamesFormat)) {

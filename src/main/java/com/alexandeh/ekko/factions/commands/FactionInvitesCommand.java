@@ -56,7 +56,7 @@ public class FactionInvitesCommand extends FactionCommand {
                 }
 
                 invitedPlayers = invitedPlayers.substring(0, invitedPlayers.lastIndexOf(splitter));
-                player.sendMessage(langConfig.getString("FACTION_OTHER.INVITES.FACTION_INVITES").replace("%INVITES%", invitedPlayers));
+                player.sendMessage(langConfig.getString("FACTION_OTHER.INVITES.FACTION_INVITES").replace("%INVITES%", invitedPlayers)); //TODO ADD /F WHO
             }
         }
     }

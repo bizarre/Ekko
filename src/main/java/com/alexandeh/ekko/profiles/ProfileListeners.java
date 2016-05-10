@@ -1,5 +1,6 @@
 package com.alexandeh.ekko.profiles;
 
+import com.alexandeh.ekko.utils.player.PlayerUtility;
 import com.alexandeh.ekko.utils.player.SimpleOfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +19,12 @@ public class ProfileListeners implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Profile.sendTabUpdate();
+        Profile.sendTabUpdate(player);
+        Profile profile = Profile.getByUuid(player.getUniqueId());
+
+        for (Player otherPlayer : PlayerUtility.getOnlinePlayers()) {
+            profile.updateTab(otherPlayer);
+        }
 
         SimpleOfflinePlayer offlinePlayer = SimpleOfflinePlayer.getByUuid(player.getUniqueId());
 

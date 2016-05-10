@@ -1,5 +1,6 @@
 main: com.alexandeh.ekko.Ekko
 name: Ekko
 author: Alexandeh
+depend: [Vault]
 description: Factions plugin
 version: 1.0-SNAPSHOT

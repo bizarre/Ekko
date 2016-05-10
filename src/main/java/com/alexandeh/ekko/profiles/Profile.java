@@ -144,6 +144,71 @@ public class Profile {
         }
     }
 
+    public void updateTab(Player toUpdate) {
+        Player player = Bukkit.getPlayer(uuid);
+
+        if (player != null) {
+
+            Scoreboard scoreboard;
+            boolean newScoreboard = false;
+
+            if (player.getScoreboard() != Bukkit.getScoreboardManager().getMainScoreboard()) {
+                scoreboard = player.getScoreboard();
+            } else {
+                scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+                newScoreboard = true;
+            }
+
+            Ekko nebula = Ekko.getInstance();
+            ConfigFile mainConfig = nebula.getMainConfig();
+
+            if (mainConfig.getBoolean("TAB_LIST.ENABLED")) {
+                Team friendly = getExistingOrCreateNewTeam("friendly", scoreboard, ChatColor.valueOf(mainConfig.getString("TAB_LIST.FRIENDLY_COLOR")));
+                Team ally = getExistingOrCreateNewTeam("ally", scoreboard, ChatColor.valueOf(mainConfig.getString("TAB_LIST.ALLY_COLOR")));
+                Team enemy = getExistingOrCreateNewTeam("enemy", scoreboard, ChatColor.valueOf(mainConfig.getString("TAB_LIST.ENEMY_COLOR")));
+
+
+                if (faction != null) {
+                    if (faction.getOnlinePlayers().contains(toUpdate) && !(friendly.getEntries().contains(toUpdate.getName()))) {
+                        friendly.addEntry(toUpdate.getName());
+                    }
+
+                    for (PlayerFaction allyFaction : faction.getAllies()) {
+                        if (allyFaction.getOnlinePlayers().contains(toUpdate) && !(ally.getEntries().contains(toUpdate.getName()))) {
+                            ally.addEntry(toUpdate.getName());
+                        }
+                    }
+                }
+
+
+                if (friendly.getEntries().contains(toUpdate.getName()) && (faction == null || !faction.getOnlinePlayers().contains(toUpdate))) {
+                    friendly.removeEntry(toUpdate.getName());
+                }
+
+                if (ally.getEntries().contains(toUpdate.getName())) {
+                    Profile enemyProfile = Profile.getByUuid(toUpdate.getUniqueId());
+                    PlayerFaction enemyFaction = enemyProfile.getFaction();
+                    if (enemyFaction == null || faction == null || !faction.getAllies().contains(enemyFaction)) {
+                        ally.removeEntry(toUpdate.getName());
+                    }
+                }
+
+                if (!(friendly.getEntries().contains(toUpdate.getName())) && (!(ally.getEntries().contains(toUpdate.getName())))) {
+                    enemy.addEntry(toUpdate.getName());
+                }
+
+                if (!(friendly.getEntries().contains(player.getName()))) {
+                    friendly.addEntry(player.getName());
+                }
+
+                if (newScoreboard) {
+                    player.setScoreboard(scoreboard);
+                }
+            }
+        }
+
+    }
+
     private Team getExistingOrCreateNewTeam(String string, Scoreboard scoreboard, ChatColor prefix) {
         Team toReturn = scoreboard.getTeam(string);
 
@@ -158,6 +223,12 @@ public class Profile {
     public static void sendTabUpdate() {
         for (Player player : PlayerUtility.getOnlinePlayers()) {
             getByUuid(player.getUniqueId()).updateTab();
+        }
+    }
+
+    public static void sendTabUpdate(Player toUpdate) {
+        for (Player player : PlayerUtility.getOnlinePlayers()) {
+            getByUuid(player.getUniqueId()).updateTab(toUpdate);
         }
     }
 
