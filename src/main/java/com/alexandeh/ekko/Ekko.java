@@ -1,5 +1,6 @@
 package com.alexandeh.ekko;
 
+import com.alexandeh.ekko.factions.claims.ClaimListeners;
 import com.alexandeh.ekko.factions.commands.*;
 import com.alexandeh.ekko.factions.commands.FactionDepositCommand;
 import com.alexandeh.ekko.factions.commands.officer.FactionWithdrawCommand;
@@ -124,6 +125,7 @@ public class Ekko extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ProfileListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ScoreboardListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new ClaimListeners(), this);
     }
 
     public static Ekko getInstance() {

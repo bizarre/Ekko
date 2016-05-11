@@ -122,6 +122,7 @@ FACTION_OTHER:
   INVITED_TO_JOIN: "&eYou&e have been invited to join &9%FACTION%&e. &7(Click to join)"
   JOINED: "&eYou joined &9%FACTION%&e."
   LEFT: "&eYou left &9%FACTION%&e."
+  RECEIVED_WAND: "&7You have received a claiming wand."
   INVITES:
     PLAYER_INVITES: "&eYour invites: &7%INVITES%"
     PLAYER_INVITES_PLACEHOLDER: "&7No pending invites."

@@ -17,6 +17,16 @@ TAB_LIST:
   FRIENDLY_COLOR: "DARK_GREEN"
   ALLY_COLOR: "LIGHT_PURPLE"
   ENEMY_COLOR: "YELLOW"
+FACTION_CLAIMING:
+  WAND:
+    TYPE: "GOLD_HOE"
+    DATA: 0
+    NAME: "&aClaiming Wand"
+    LORE:
+      - "&aLeft click the ground&7 to set the &afirst&7 point."
+      - "&aRight click the ground&7 to set the &asecond&7 point."
+      - "&aSneak and left click the air&7 to claim once both points set."
+      - "&aRight click the air twice&7 to clear your selection."
 
 FACTION_CHAT:
   ENABLED: TRUE

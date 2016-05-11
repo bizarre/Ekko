@@ -1,11 +1,15 @@
 package com.alexandeh.ekko.factions;
 
 import com.alexandeh.ekko.Ekko;
+import com.alexandeh.ekko.factions.claims.Claim;
 import com.alexandeh.ekko.factions.type.PlayerFaction;
 import com.alexandeh.ekko.files.ConfigFile;
+import com.alexandeh.ekko.utils.ItemBuilder;
 import com.alexandeh.ekko.utils.player.SimpleOfflinePlayer;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -52,10 +56,13 @@ public class Faction {
     private String name, home;
 
     private UUID uuid;
+    private Set<Claim> claims;
 
     public Faction(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
+
+        claims = new HashSet<>();
 
         if (uuid == null) {
             this.uuid = UUID.randomUUID();
@@ -110,6 +117,13 @@ public class Faction {
             }
         }
         return toReturn;
+    }
+
+    public static ItemStack getWand(Ekko main) {
+        return new ItemBuilder(Material.valueOf(main.getMainConfig().getString("FACTION_CLAIMING.WAND.TYPE")))
+                .lore(main.getMainConfig().getStringList("FACTION_CLAIMING.WAND.LORE"))
+                .name(main.getMainConfig().getString("FACTION_CLAIMING.WAND.NAME"))
+                .data(main.getMainConfig().getInt("FACTION_CLAIMING.WAND.DATA")).build();
     }
 
     public static Set<Faction> getFactions() {
