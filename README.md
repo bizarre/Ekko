@@ -7,7 +7,7 @@ Ekko was finished last month (Early May 2016), however I have decided not to pus
 
 Alongside Ekko I had planned to release an open source core too, however, for to the same reasons above that project will not be open source either. I truly do apologize to those that were anticipating the end result to be a free and collaborative project where developers could work together to make something greater. 
 
-Depending on what happens in the near-future, I may release Ekko's source once again.
-I do believe that even though this project (on Github) is incomplete, it still servers as a valuable addition to my portfolio.
+Depending on what happens in the near-future, I may release Ekko's source once again. However, based on how things are going on right now, that is really unlikely. 
+I do believe that even though this project (on Github) is incomplete, it still serves as a valuable addition to my portfolio.
 
 For any business inquiries email me at contact@alexandeh.com.
