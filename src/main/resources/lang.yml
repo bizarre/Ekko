@@ -1,6 +1,6 @@
 # I'm pretty bad at organizing/naming configuration files with these many keys + values.
 # If you feel like you can do a better job, feel free to do so and make a PR.
-# Thanks, Alexandeh/Frog <3
+# Thanks, BizarreAlex <3
 FACTION_HELP:
     1:
       - "&6&m-----------------------------------------------------"
