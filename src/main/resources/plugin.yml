@@ -1,6 +1,6 @@
-main: com.alexandeh.ekko.Ekko
+main: com.bizarrealex.ekko.Ekko
 name: Ekko
-author: Alexandeh
+author: BizarreAlex
 depend: [Vault]
 description: Factions plugin
 version: 1.0-SNAPSHOT
